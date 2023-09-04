@@ -31,11 +31,48 @@ export default {
         }
     },
 
+
+    deleteatividade: (idAtividade) => {
+        return http.delete(`/atividade/delete/${idAtividade}`, {
+            headers: {
+                "Content-Type": "application/json",
+                "Access-Control-Allow-Headers": "*",
+                "Access-Control-Allow-Methods": "OPTIONS,POST,GET",
+            },
+
+            
+        });
+        
+    },
+
+    listatividadefull: () => {
+        let token = localStorage.getItem('token');
+        let decode = VueJwtDecode.decode(token);
+        let userId = decode.id_user;
+        return http.get(`/atividade/full/${userId}`, {
+            headers: {
+                "Content-Type": "application/json",
+                "Access-Control-Allow-Headers": "*",
+                "Access-Control-Allow-Methods": "OPTIONS,POST,GET",
+            },
+        });
+    },
+
     listatividade: () => {
         let token = localStorage.getItem('token');
         let decode = VueJwtDecode.decode(token);
         let userId = decode.id_user;
         return http.get(`/atividade/${userId}`, {
+            headers: {
+                "Content-Type": "application/json",
+                "Access-Control-Allow-Headers": "*",
+                "Access-Control-Allow-Methods": "OPTIONS,POST,GET",
+            },
+        });
+    },
+
+    listatotal: () => {
+        return http.get("/atividade/total", {
             headers: {
                 "Content-Type": "application/json",
                 "Access-Control-Allow-Headers": "*",

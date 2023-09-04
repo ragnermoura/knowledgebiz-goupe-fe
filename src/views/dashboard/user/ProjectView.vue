@@ -1,4 +1,4 @@
-<template id="Project">
+<template id="Project-cad">
     <div class="layout-wrapper layout-content-navbar">
         <div class="layout-container">
             <!-- Menu -->
@@ -50,6 +50,8 @@
                                                     <select v-model="selectedUser" id="language"
                                                         class="select2 form-select">
                                                         <option value="" selected disabled>Select Manager</option>
+                                                        <option value="To be determined" >To be determined</option>
+
                                                         <option v-for="(user, index) in selectUsers" :value="user.firstname"
                                                             :key="index">
                                                             {{ user.firstname }}
@@ -125,9 +127,9 @@
 import Aside from '../../../components/aside/index.vue';
 import Navbar from '../../../components/navbar/index.vue';
 import Footer from '../../../components/footer/index.vue';
-import api from '../../../services/projects/index'
+import api from '../../../services/auth/index'
 export default {
-    name: 'Project',
+    name: 'Project-cad',
     data() {
         return {
             showTextAreaBlocage: false,
@@ -184,10 +186,6 @@ export default {
                 }, 3000);
 
 
-
-
-
-                // console.log('A RESPOSTA ESTÀ AQUI: =====>', JSON.stringify(res, null, 2));
             } catch (error) {
                 console.error(error);
             }

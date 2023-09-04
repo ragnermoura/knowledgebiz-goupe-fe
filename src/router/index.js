@@ -24,6 +24,11 @@ const router = createRouter({
       component: () => import('../views/auth/ProjectView.vue')
     },
     {
+      path: '/log',
+      name: 'log',
+      component: () => import('../views/dashboard/user/LogView.vue')
+    },
+    {
       path: '/all-project',
       name: 'all-projectt',
       component: () => import('../views/dashboard/user/AllProjectView.vue')
