@@ -38,10 +38,10 @@
       <li class="menu-item" hidden v-if="dev">
         <a href="/calendar" class="menu-link">
           <i class="menu-icon tf-icons bx bx-circle"></i>
-          <div data-i18n="Analytics">My requests</div>
+          <div data-i18n="Analytics">My requests  </div>
         </a>
       </li>
-      <li class="menu-item" v-if="admin">
+      <li class="menu-item" hidden v-if="admin">
         <a href="/calendar" class="menu-link">
           <i class="menu-icon tf-icons bx bx-mail-send"></i>
           <div data-i18n="Analytics">Requests received</div>
@@ -67,31 +67,31 @@
           <div data-i18n="Analytics">Projects</div>
         </a>
       </li>
-      <li class="menu-item" v-if="admin">
+      <li class="menu-item" hidden v-if="admin">
         <a href="" class="menu-link">
           <i class="menu-icon tf-icons bx bxs-buildings"></i>
           <div data-i18n="Analytics">Equipment/assets</div>
         </a>
       </li>
       <li class="menu-item" v-if="dev">
-        <a href="#" class="menu-link">
+        <a href=" " class="menu-link">
           <i class="menu-icon tf-icons bx bxs-doughnut-chart"></i>
-          <div data-i18n="Analytics">My activities</div>
+          <div data-i18n="Analytics">My activities  <small class="text-danger">| Blocked</small></div>
         </a>
       </li>
       <li class="menu-header small text-uppercase">
         <span class="menu-header-text">Manager</span>
       </li>
       <li class="menu-item" v-if="dev">
-        <a href="#" class="menu-link">
+        <a href="/log" class="menu-link">
           <i class="menu-icon tf-icons bx bx-grid"></i>
-          <div data-i18n="Analytics">My logs</div>
+          <div data-i18n="Analytics">Logs</div>
         </a>
       </li>
       <li class="menu-item" v-if="dev">
-        <a href="#" class="menu-link">
+        <a href="" class="menu-link">
           <i class="menu-icon tf-icons bx bx-code"></i>
-          <div data-i18n="Analytics">My projects</div>
+          <div data-i18n="Analytics">My projects <small class="text-danger">| Blocked</small></div>
         </a>
       </li>
       <li class="menu-item" v-if="admin">
@@ -137,7 +137,7 @@ export default {
       dev: false,
       name: '',
       lastname: '',
-      nivelAccess: ''
+     
     }
   },
   mounted() {
@@ -149,7 +149,7 @@ export default {
     if (decode.id_nivel == 2) {
       this.dev = true
       this.admin = false
-      this.nivelAccess = 'Developer'
+      
     }
 
 

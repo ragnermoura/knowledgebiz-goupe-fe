@@ -23,9 +23,18 @@ export default {
       .then((response) => {
         const token = response.data.token;
         localStorage.setItem("token", token);
-        
 
-        window.location.href = "/dashboard-main-developer";
+        let decode = VueJwtDecode.decode(token);
+        let nivelId = decode.id_nivel;
+
+        if (nivelId == 1) {
+          window.location.href = "/report";
+        } else {
+          window.location.href = "/dashboard-main-developer";
+        }
+
+
+
 
       })
       .catch((error) => {
@@ -56,12 +65,12 @@ export default {
         }
       )
       .then((response) => {
-      
-       let idUser = response.data.usuarioCriado.id_user
-       localStorage.setItem('id', idUser)
 
-       window.location.href = "/you-project";
-       
+        let idUser = response.data.usuarioCriado.id_user
+        localStorage.setItem('id', idUser)
+
+        window.location.href = "/you-project";
+
       })
       .catch((error) => {
         console.log("Error ========>", error);
@@ -73,7 +82,7 @@ export default {
     http
       .post(
         "/project-user/cadastro/",
-        
+
         {
           id_projects: selectedProjectIds,
           id_user: idUser,
@@ -99,22 +108,58 @@ export default {
 
   list: () => {
     return http.get("/projeto/", {
-        headers: {
-            "Content-Type": "application/json",
-            "Access-Control-Allow-Headers": "*",
-            "Access-Control-Allow-Methods": "OPTIONS,POST,GET",
-          },
-      })   
+      headers: {
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Headers": "*",
+        "Access-Control-Allow-Methods": "OPTIONS,POST,GET",
+      },
+    })
   },
-
 
   users: () => {
     return http.get("/usuarios/", {
       headers: {
-          "Content-Type": "application/json",
-          "Access-Control-Allow-Headers": "*",
-          "Access-Control-Allow-Methods": "OPTIONS,POST,GET",
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Headers": "*",
+        "Access-Control-Allow-Methods": "OPTIONS,POST,GET",
+      },
+    })
+  },
+
+  dados: (position, phone, address, zipcode, country, language) => {
+    let token = localStorage.getItem('token');
+    let decode = VueJwtDecode.decode(token);
+    let userId = decode.id_user;
+    http
+      .patch(
+        "/usuarios/dados",
+        {
+          id_user: userId,
+          education: position,
+          phonenumber: phone,
+          address: address,
+          zipcode: zipcode,
+          country: country,
+          language: language,
         },
-    })   
-  }
-};
+
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+            "Access-Control-Allow-Headers": "*",
+            "Access-Control-Allow-Methods": "OPTIONS,POST,GET",
+          },
+        }
+      )
+      .then((response) => {
+
+        console.log(response)
+
+      })
+      .catch((error) => {
+        console.log("Error ========>", error);
+      });
+  },
+
+}

@@ -99,7 +99,7 @@
                                                     </div>
                                                 </div>
                                                 <span>You Projects</span>
-                                                <h3 class="card-title text-nowrap mb-1">6</h3>
+                                                <h3 class="card-title text-nowrap mb-1">{{ myproject }}</h3>
                                                 <small class="text-success fw-semibold"><i class="bx bx-up-arrow-alt"></i>
                                                     +0%</small>
                                             </div>
@@ -116,9 +116,7 @@
                             <!-- Cronometro 1 -->
 
                             <form @submit.prevent="handleAtividade">
-                                <div class="alert alert-success" role="alert">
-                                    Your activity has been successfully recorded
-                                </div>
+
 
                                 <nav class="layout-navbar container-xxl navbar navbar-expand-xl navbar-detached align-items-center bg-navbar-theme mt-5"
                                     id="layout-navbar">
@@ -150,7 +148,7 @@
                                         <div class="navbar-nav align-items-center">
                                             <div class="nav-item d-flex align-items-center">&nbsp;
                                                 <label for=""><small>Ativity: </small></label>
-                                                <input type="text" v-model="atividade" style="margin-left: 3%;"
+                                                <input type="text" v-model="atividade2" style="margin-left: 3%;"
                                                     class="form-control border-1 shadow-none"
                                                     placeholder="Ex.: API creation" aria-label="Search..." />
                                             </div>
@@ -191,6 +189,9 @@
                                                     aria-label="Close"></button>
                                             </div>
                                             <div class="modal-body">
+                                                <div v-if="success" class="alert alert-success" role="alert">
+                                                    Your activity has been successfully recorded
+                                                </div>
                                                 <div class="mb-3 row">
                                                     <div class="col-md-8">
                                                         <div class="form-check form-switch mb-2">
@@ -274,9 +275,10 @@
                                         </tr>
                                     </thead>
                                     <tbody class="table-border-bottom-0">
-                                        <tr class="text-center" v-for="(atividade, index) in atididades" :key="index">
-                                            <td><i class="fab fa-angular fa-lg text-danger me-3"></i> <strong>{{ atividade.tb_project.projectname}}</strong></td>
-                                                    <td>{{ atividade.activity }}</td>
+                                        <tr class="text-center" v-for="(atividade, index) in   atididades  " :key="index">
+                                            <td><i class="fab fa-angular fa-lg text-danger me-3"></i> <strong>{{
+                                                atividade.tb_project.projectname }}</strong></td>
+                                            <td>{{ atividade.activity }}</td>
 
                                             <td>{{ atividade.data_activities }}</td>
                                             <td>{{ atividade.time }}</td>
@@ -290,10 +292,76 @@
                                                         <i class="bx bx-dots-vertical-rounded"></i>
                                                     </button>
                                                     <div class="dropdown-menu">
-                                                        <a class="dropdown-item" href="javascript:void(0);"><i
+                                                        <a data-bs-toggle="modal"
+                                                            :data-bs-target="`#modalEdit${atividade.id_activities}`"
+                                                            class="dropdown-item" href="javascript:void(0);"><i
                                                                 class="bx bx-edit-alt me-1"></i> Edit</a>
-                                                        <a class="dropdown-item" href="javascript:void(0);"><i
+                                                        <a class="dropdown-item" @click="handleDelete(atividade.id_activities)" href="javascript:void(0);"><i
                                                                 class="bx bx-trash me-1"></i> Delete</a>
+                                                    </div>
+
+                                                    <div class="modal fade" :id="`modalEdit${atividade.id_activities}`"
+                                                        aria-labelledby="modalToggleLabel" tabindex="-1"
+                                                        style="display: none" aria-hidden="true">
+                                                        <div class="modal-dialog modal-dialog-centered">
+                                                            <div class="modal-content">
+                                                                <div class="modal-header">
+                                                                    <h5 class="modal-title" id="modalToggleLabel">Edit your
+                                                                        time
+                                                                    </h5>
+                                                                    <button type="button" class="btn-close"
+                                                                        data-bs-dismiss="modal" aria-label="Close"></button>
+                                                                </div>
+                                                                <div class="modal-body">
+
+                                                                    <div class="row">
+                                                                        <div class="mb-3 col-md-12">
+                                                                            <label for="firstName"
+                                                                                class="form-label">Project Name</label>
+                                                                            <input class="form-control" disabled type="text"
+                                                                                id="firstName"
+                                                                                :value="atividade.tb_project ? atividade.tb_project.projectname : ''"
+                                                                                autofocus />
+                                                                        </div>
+                                                                        <div class="mb-3 col-md-12">
+                                                                            <label for="firstName"
+                                                                                class="form-label">Activitity</label>
+                                                                            <input class="form-control" disabled type="text"
+                                                                                id="time" :value="atividade.activity"
+                                                                                autofocus />
+                                                                        </div>
+                                                                        <div class="mb-3 col-md-6">
+                                                                            <label for="firstName"
+                                                                                class="form-label">Time</label>
+                                                                            <input class="form-control" disabled type="text"
+                                                                                id="time" :value="calculatedTime" />
+                                                                        </div>
+                                                                        <div class="mb-3 col-md-6">
+                                                                            <label for="firstName"
+                                                                                class="form-label">Percentage actual</label>
+                                                                            <input class="form-control" disabled type="text"
+                                                                                id="firstName"
+                                                                                :value="atividade.percentage ? atividade.percentage : ''"
+                                                                                autofocus />
+                                                                        </div>
+                                                                        <div class="mb-3 col-md-6">
+                                                                            <label for="firstName" class="form-label">New
+                                                                                Percentage</label>
+                                                                            <input class="form-control" type="number"
+                                                                                id="percentage" v-model="newPercentage"
+                                                                                @input="updateTime" />
+                                                                        </div>
+                                                                        <hr>
+                                                                    </div>
+
+                                                                </div>
+                                                                <div class="modal-footer">
+                                                                    <button class="btn btn-warning" type="submit">
+                                                                        Edit
+                                                                    </button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </td>
@@ -329,7 +397,8 @@ import Footer from '../../../components/footer/index.vue';
 import VueJwtDecode from "vue-jwt-decode";
 import api from '../../../services/projects/index'
 import apirest from '../../../services/activities/index'
-import moment from 'moment'
+import moment from 'moment';
+
 
 export default {
     name: 'MainDashboard',
@@ -353,12 +422,19 @@ export default {
             deadline: '',
             observation: '',
             idUser: '',
-            atividade: '',
+            atividade2: '',
             dateToday: '',
             porcentage: '',
             timeAll: '',
             atididades: [],
-            hours: 0
+            hours: '',
+            atividade: {
+                time: '08:00:00', // Exemplo de valor inicial
+            },
+            newPercentage: 0,
+            success: false,
+            myproject: ''
+
 
 
 
@@ -375,19 +451,22 @@ export default {
         this.name = name
         this.idUser = decode.id_user
 
+        api.listtotal().then((resposta) => {
+            console.log(resposta)
+            this.myproject = resposta.totalProjects;
+        });
+
 
         api.list().then((resposta) => {
-
             this.projects = resposta.data.response;
-
-
-
         });
 
         apirest.listatividade().then((resposta) => {
-
             this.atididades = resposta.data.response;
+        });
 
+        apirest.listatotal().then((resposta) => {
+            this.hours = resposta.data.totalResult;
         });
 
     },
@@ -397,6 +476,17 @@ export default {
             const minutes = String(Math.floor((this.time % 3600) / 60)).padStart(2, '0');
             const seconds = String(this.time % 60).padStart(2, '0');
             return `${hours}:${minutes}:${seconds}`;
+        },
+
+        calculatedTime() {
+            const totalSecondsInDay = 8 * 3600;
+            const newTimeInSeconds = (this.newPercentage / 100) * totalSecondsInDay;
+
+            const hours = Math.floor(newTimeInSeconds / 3600);
+            const minutes = Math.floor((newTimeInSeconds % 3600) / 60);
+            const seconds = newTimeInSeconds % 60;
+
+            return `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
         },
 
 
@@ -430,17 +520,12 @@ export default {
             this.isRunning = false;
             clearInterval(this.timerInterval);
 
-            const totalSecondsInWorkDay = 8 * 3600; // 8 horas em segundos
-            const percentage = (this.time / totalSecondsInWorkDay) * 100; // Calcula a porcentagem
+            const totalSecondsInWorkDay = 8 * 3600; 
+            const percentage = (this.time / totalSecondsInWorkDay) * 100;
 
             this.dateToday = new Date();
             this.timeAll = this.formattedTime
             this.porcentage = percentage.toFixed(2)
-
-
-
-            // console.log(`Tempo parado em: ${this.formattedTime}`);
-            // console.log(`Porcentagem do tempo gasto: ${percentage.toFixed(2)}%`);
 
             this.showCronoOne = !this.showCronoOne;
         },
@@ -453,26 +538,70 @@ export default {
             this.selectedProject = null;
         },
 
+        async handleDelete(idAtividade){
+
+            await apirest.deleteatividade(idAtividade)
+
+            window.location.reload()
+
+        },
+
 
 
         async handleAtividade() {
 
-            let atividade = this.atividade
-            let data = this.dateToday
-            let tempo = this.timeAll
-            let pocentagem = this.porcentage
-            let bloqueio = this.blockage
-            let deadline = this.deadline
-            let observation = this.observation
-            let name = this.name
-            let idUser = this.idUser
-            let idProjects = this.selectedProject
+            try {
+                let atividade = this.atividade2
+                let data = this.dateToday
+                let tempo = this.timeAll
+                let pocentagem = this.porcentage
+                let bloqueio = this.blockage
+                let deadline = this.deadline
+                let observation = this.observation
+                let name = this.name
+                let idUser = this.idUser
+                let idProjects = this.selectedProject
 
-            //console.log(atividade, data, tempo, pocentagem, bloqueio, deadline, observation, name, idUser, idProjects)
+                const res = await apirest.atividade(atividade, data, tempo, pocentagem, bloqueio, deadline, observation, name, idUser, idProjects)
 
-            await apirest.atividade(atividade, data, tempo, pocentagem, bloqueio, deadline, observation, name, idUser, idProjects)
+                console.log(res.status)
 
-        }
+                if (res.status == 201) {
+
+                    this.success = true
+
+                    setTimeout(window.location.reload(), 5000)
+
+                }
+
+
+
+
+
+
+
+                //console.log(atividade, data, tempo, pocentagem, bloqueio, deadline, observation, name, idUser, idProjects)
+
+
+
+            } catch (error) {
+
+            }
+        },
+
+
+        updateTime() {
+            const totalSecondsInDay = 8 * 3600; // 8 horas em segundos
+            const newTimeInSeconds = (this.newPercentage / 100) * totalSecondsInDay;
+
+            const hours = Math.floor(newTimeInSeconds / 3600);
+            const minutes = Math.floor((newTimeInSeconds % 3600) / 60);
+            const seconds = newTimeInSeconds % 60;
+
+            const formattedTime = `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+
+            this.atividade.time = formattedTime;
+        },
     },
 }
 
