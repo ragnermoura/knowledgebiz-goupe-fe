@@ -47,7 +47,7 @@
                     <div class="card-body">
                       <div class="d-flex align-items-start align-items-sm-center gap-4">
                         <img
-                          src="../assets/img/avatars/1.png"
+                        :src="previewUrl"
                           alt="user-avatar"
                           class="d-block rounded"
                           height="100"
@@ -63,6 +63,7 @@
                               id="upload"
                               class="account-file-input"
                               hidden
+                              @change="handleFileChange"
                               accept="image/png, image/jpeg"
                             />
                           </label>
@@ -77,7 +78,7 @@
                     </div>
                     <hr class="my-0" />
                     <div class="card-body">
-                      <form id="formAccountSettings" method="POST" onsubmit="return false">
+                      <form id="formAccountSettings" @submit.prevent="uploadImage">
                         <div class="row">
                           <div class="mb-3 col-md-6">
                             <label for="firstName" class="form-label">First Name</label>
@@ -87,6 +88,7 @@
                               id="firstName"
                               name="firstName"
                               value="John"
+
                               autofocus
                             />
                           </div>
@@ -244,18 +246,63 @@
 import Aside from '../../../components/aside/index.vue';
 import Navbar from '../../../components/navbar/index.vue';
 import Footer from '../../../components/footer/index.vue';
+import apiUpload from '../../../services/upload/index'
 export default {
     name: 'Main-Account',
     data() {
         return {
             showTextAreaBlocage: false,
-            showTextAreaOverdue: false
+            showTextAreaOverdue: false,
+            selectedFile: null,
+            previewUrl: null, // Arquivo selecionado pelo usuário
         };
+    },
+    methods: {
+      handleFileChange(event) {
+      // Quando o usuário seleciona um arquivo, armazene-o na variável selectedFile
+      const file = event.target.files[0];
+      console.log('mudamos')
+      if (file) {
+        // Cria um objeto FileReader
+        const reader = new FileReader();
+
+        // Configura um evento de carga para a leitura do arquivo
+        reader.onload = () => {
+          // Quando a leitura for concluída, a URL da imagem será definida
+          this.previewUrl = reader.result;
+        };
+
+        // Lê o arquivo como uma URL de dados
+        reader.readAsDataURL(file);
+
+        // Armazena o arquivo selecionado na variável selectedFile
+        this.selectedFile = file;
+      } else {
+        this.previewUrl = null;
+        this.selectedFile = null;
+      }
+    },
+    async uploadImage() {
+      if (!this.selectedFile) {
+        alert("Selecione um arquivo de imagem antes de enviar.");
+        return;
+      }
+      const formData = new FormData();
+      formData.append("avatar", this.selectedFile);
+
+      const res = await apiUpload.uploadAvatar(formData)
+
+      if(res.status == 201){
+        window.location.reload()
+      }
+
+    },
     },
     components: {
         Aside,
         Navbar,
         Footer
     }
+    
 }
 </script>

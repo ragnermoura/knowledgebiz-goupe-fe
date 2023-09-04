@@ -29,7 +29,7 @@
                 <li class="nav-item navbar-dropdown dropdown-user dropdown">
                     <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
                         <div class="avatar avatar-online">
-                            <img src="../../../../src/assets/img/avatars/1.png" alt class="w-px-40 h-auto rounded-circle" />
+                            <img :src="image" alt class="w-px-40 h-auto rounded-circle" />
                         </div>
                     </a>
                     <ul class="dropdown-menu dropdown-menu-end">
@@ -38,7 +38,7 @@
                                 <div class="d-flex">
                                     <div class="flex-shrink-0 me-3">
                                         <div class="avatar avatar-online">
-                                            <img src="../../../../src/assets/img/avatars/1.png" alt
+                                            <img :src="image" alt
                                                 class="w-px-40 h-auto rounded-circle" />
                                         </div>
                                     </div>
@@ -76,16 +76,18 @@
 </template>
 <script>
 import VueJwtDecode from "vue-jwt-decode";
+import apiUpload from '../../services/upload/index'
 export default {
     name: 'NavBar',
     data() {
         return {
             name: '',
             lastname: '',
-            nivelAccess: ''
+            nivelAccess: '',
+            image: '../../../../src/assets/img/avatars/1.png'
         }
     },
-    mounted() {
+    async mounted() {
         let token = localStorage.getItem('token')
         let decode = VueJwtDecode.decode(token);
 
@@ -97,7 +99,14 @@ export default {
             this.nivelAccess = 'Developer'
         }
 
+        const image = await apiUpload.getAvatar()
 
+        if(image.status == 200){
+            console.log(image)
+            this.image = `http://localhost:3000${image.data?.image?.avatar}`
+        } else {
+            this.image = `../../../../src/assets/img/avatars/1.png`
+        }
     },
     methods: {
         handleLogout() {
