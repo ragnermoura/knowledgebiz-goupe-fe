@@ -151,6 +151,11 @@ export default {
       this.admin = false
       
     }
+    if (decode.id_nivel == 1) {
+      this.dev = false
+      this.admin = true
+      
+    }
 
 
   }

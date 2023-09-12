@@ -46,6 +46,19 @@ export default {
         })
     },
 
+    myproject: () => {
+        let token = localStorage.getItem('token');
+        let decode = VueJwtDecode.decode(token);
+        let userId = decode.id_user;
+        return http.get(`/project-user/project-por-user/${userId}`, {
+            headers: {
+                "Content-Type": "application/json",
+                "Access-Control-Allow-Headers": "*",
+                "Access-Control-Allow-Methods": "OPTIONS,POST,GET",
+            },
+        })
+    },
+
 
     list: () => {
         return http.get("/projeto/", {

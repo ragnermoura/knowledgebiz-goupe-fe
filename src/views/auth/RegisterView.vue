@@ -7,7 +7,7 @@
           <div class="card-body">
             <!-- Logo -->
             <div class="app-brand justify-content-center">
-              <a href="index.html" class="app-brand-link gap-2">
+              <a href="" class="app-brand-link gap-2">
                 <span class="app-brand-logo demo">
                   <img src="../../assets/img/logo/logoKbz.png" width="300" alt="">
                 </span>
@@ -18,6 +18,14 @@
             <p class="mb-4">Make your app management easy and fun!</p>
 
             <form id="formAuthentication" @submit.prevent="handleRegister">
+
+              <div class="alert alert-warning" v-if="emailErro" role="alert">
+                ⚠️ Someone is already using this email, try another one!
+              </div>
+              <div class="alert alert-danger" v-if="erro500" role="alert">
+                ⚠️ <strong>Error 500</strong> - We're having internal problems. Come back later!
+              </div>
+
               <div class="row">
                 <div class="mb-3 col-md-6">
                   <label for="username" class="form-label">Firstname</label>
@@ -59,7 +67,7 @@
 
             <p class="text-center">
               <span>Already have an account?</span>
-              <a href="/register">
+              <a href="/">
                 <span>Sign in instead</span>
               </a>
             </p>
@@ -80,14 +88,28 @@ export default {
       lastname: '',
       email: '',
       senha: '',
+      emailErro: false,
+      erro500: false,
     };
+  },
+
+  mounted() {
+    let erroEmail = localStorage.getItem('error')
+
+    if (erroEmail == 409) {
+      this.emailErro = true
+      this.erro500 = false
+    } else if (erroEmail == 500) {
+      this.erro500 = true
+      this.emailErro = false
+    }
   },
 
 
   methods: {
     async handleRegister() {
       let youFirstname = this.firstname
-      let youLastname = this.firstname
+      let youLastname = this.lastname
       let youEmail = this.email
       let youPass = this.senha
 

@@ -19,6 +19,11 @@
                         <p class="mb-4">Please sign-in to your account and start the adventure</p>
 
                         <form id="formAuthentication" class="mb-3" @submit.prevent="handleLogin">
+
+                            <div class="alert alert-danger" v-if="emailErro" role="alert">
+                                ⚠️ Wrong email or password, try again
+                            </div>
+                         
                             <div class="mb-3">
                                 <label for="email" class="form-label">E-mail</label>
                                 <input type="text" class="form-control" v-model="email" id="email" name="email-username"
@@ -70,15 +75,33 @@ export default {
     data() {
         return {
             email: '',
-            password: ''
+            password: '',
+            emailErro: false,
+            
         }
     },
-    methods: {
-        async handleLogin() {
-            let youEmail = this.email
-            let youPass = this.password
+    mounted() {
+        let erroEmail = localStorage.getItem('error')
 
-            await api.login(youEmail, youPass)
+        if (erroEmail == 401) {
+            this.emailErro = true
+        } 
+    },
+    methods: {
+
+        async handleLogin() {
+            try {
+                let youEmail = this.email
+                let youPass = this.password
+
+                const res = await api.login(youEmail, youPass)
+
+
+
+            } catch (error) {
+                console.error(error);
+            }
+
 
         }
     }

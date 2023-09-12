@@ -38,19 +38,14 @@
                       Connections</a>
                   </li>
                 </ul>
+             
                 <div class="card mb-4">
                   <h5 class="card-header">Profile Details</h5>
+                  <form @submit.prevent="handleAtividade()">
                   <!-- Account -->
                   <div class="card-body">
                     <div class="d-flex align-items-start align-items-sm-center gap-4">
-                      <img
-                        :src="previewUrl"
-                          alt="user-avatar"
-                          class="d-block rounded"
-                          height="100"
-                          width="100"
-                          id="uploadedAvatar"
-                        />
+                     
                         <div class="button-wrapper">
                           <label for="upload" class="btn btn-primary me-2 mb-4" tabindex="0">
                             <span class="d-none d-sm-block">Upload new photo</span>
@@ -75,7 +70,7 @@
                   </div>
                   <hr class="my-0" />
                   <div class="card-body">
-                    <form id="formAccountSettings" @submit.prevent="handleProject">
+                   
                       <div class="row">
 
 
@@ -151,8 +146,8 @@
                         <button type="submit" class="btn btn-primary me-2">Save changes</button>
                         <button type="reset" class="btn btn-outline-secondary">Cancel</button>
                       </div>
-                    </form>
-                  </div>
+                    </div>
+                  </form>
                   <!-- /Account -->
                 </div>
 
@@ -177,12 +172,12 @@
   </div>
 </template>
 <script>
-import Aside from '../../../components/aside/index.vue';
-import Navbar from '../../../components/navbar/index.vue';
-import Footer from '../../../components/footer/index.vue';
-import apiUpload from '../../../services/upload/index'
+import Aside from '../../components/aside/index.vue';
+import Navbar from '../../components/navbar/index.vue';
+import Footer from '../../components/footer/index.vue';
+import apiUpload from '../../services/upload/index'
 
-import api from '../../../services/auth/index'
+import api from '../../services/auth/index'
 export default {
   name: 'Main-Account',
   data() {
@@ -245,7 +240,8 @@ export default {
       }
 
     },
-    async handleProject() {
+
+    async handleAtividade() {
 
         
       if(this.selectedFile){

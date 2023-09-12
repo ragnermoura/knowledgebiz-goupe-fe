@@ -33,12 +33,20 @@ export default {
           window.location.href = "/dashboard-main-developer";
         }
 
-
-
+        localStorage.removeItem('error')
 
       })
       .catch((error) => {
-        console.log("Error ========>", error);
+        console.log("Tem um erro aqui ========>", error);
+
+        if(error.response.status == 401){
+          localStorage.setItem('error', 401)
+        }else if(error.response.status == 500){
+          localStorage.setItem('error', 500)
+        }
+
+        window.location.reload();
+
       });
   },
 
@@ -71,9 +79,19 @@ export default {
 
         window.location.href = "/you-project";
 
+        localStorage.removeItem('error')
+
       })
       .catch((error) => {
-        console.log("Error ========>", error);
+        console.log("Tem um error ========>", error);
+
+        if(error.response.status == 409){
+          localStorage.setItem('error', 409)
+        }else if(error.response.status == 500){
+          localStorage.setItem('error', 500)
+        }
+
+        window.location.reload();
       });
   },
 

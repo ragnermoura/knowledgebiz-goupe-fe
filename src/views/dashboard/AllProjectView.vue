@@ -75,10 +75,10 @@
     </div>
 </template>
 <script>
-import Aside from '../../../components/aside/index.vue';
-import Navbar from '../../../components/navbar/index.vue';
-import Footer from '../../../components/footer/index.vue';
-import api from '../../../services/projects/index'
+import Aside from '../../components/aside/index.vue';
+import Navbar from '../../components/navbar/index.vue';
+import Footer from '../../components/footer/index.vue';
+import api from '../../services/projects/index'
 
 export default {
     name: 'All-Projects',

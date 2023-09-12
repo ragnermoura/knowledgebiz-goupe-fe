@@ -31,7 +31,6 @@ export default {
         }
     },
 
-
     deleteatividade: (idAtividade) => {
         return http.delete(`/atividade/delete/${idAtividade}`, {
             headers: {
@@ -50,6 +49,17 @@ export default {
         let decode = VueJwtDecode.decode(token);
         let userId = decode.id_user;
         return http.get(`/atividade/full/${userId}`, {
+            headers: {
+                "Content-Type": "application/json",
+                "Access-Control-Allow-Headers": "*",
+                "Access-Control-Allow-Methods": "OPTIONS,POST,GET",
+            },
+        });
+    },
+
+    listatividadefull2: () => {
+      
+        return http.get("/atividade/full/", {
             headers: {
                 "Content-Type": "application/json",
                 "Access-Control-Allow-Headers": "*",
@@ -81,6 +91,15 @@ export default {
         });
     },
 
+    listarmanager: (userId) => {
+        return http.get(`/atividade/manager/${userId}`, {
+            headers: {
+                "Content-Type": "application/json",
+                "Access-Control-Allow-Headers": "*",
+                "Access-Control-Allow-Methods": "OPTIONS,POST,GET",
+            },
+        });
+    },
 
 
 };

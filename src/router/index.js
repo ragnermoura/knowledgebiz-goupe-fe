@@ -16,7 +16,7 @@ const router = createRouter({
     {
       path: '/project',
       name: 'project',
-      component: () => import('../views/dashboard/user/ProjectView.vue')
+      component: () => import('../views/dashboard/ProjectView.vue')
     },
     {
       path: '/you-project',
@@ -26,17 +26,17 @@ const router = createRouter({
     {
       path: '/log',
       name: 'log',
-      component: () => import('../views/dashboard/user/LogView.vue')
+      component: () => import('../views/dashboard/LogView.vue')
     },
     {
       path: '/all-project',
       name: 'all-projectt',
-      component: () => import('../views/dashboard/user/AllProjectView.vue')
+      component: () => import('../views/dashboard/AllProjectView.vue')
     },
     {
       path: '/report',
       name: 'report',
-      component: () => import('../views/dashboard/user/ReportsView.vue')
+      component: () => import('../views/dashboard/ReportsView.vue')
     },
     {
       path: '/forgot',
@@ -46,32 +46,27 @@ const router = createRouter({
     {
       path: '/dashboard-main-developer',
       name: 'dasboard-user',
-      component: () => import('../views/dashboard/user/MainView.vue')
-    },
-    {
-      path: '/dashboard-main-admin',
-      name: 'dasboard-admin',
-      component: () => import('../views/dashboard/admin/MainView.vue')
+      component: () => import('../views/dashboard/MainView.vue')
     },
     {
       path: '/calendar',
       name: 'calendar',
-      component: () => import('../views/dashboard/user/CalendarView.vue')
+      component: () => import('../views/dashboard/CalendarView.vue')
     },
     {
       path: '/account-user',
       name: 'account-user',
-      component: () => import('../views/dashboard/user/AccountView.vue')
+      component: () => import('../views/dashboard/AccountView.vue')
     },
     {
       path: '/account-user-stacks',
       name: 'account-user-stacks',
-      component: () => import('../views/dashboard/user/AccountStackView.vue')
+      component: () => import('../views/dashboard/AccountStackView.vue')
     },
     {
       path: '/account-user-connections',
       name: 'account-user-connections',
-      component: () => import('../views/dashboard/user/AccountConnView.vue')
+      component: () => import('../views/dashboard/AccountConnView.vue')
     },
   ]
 })

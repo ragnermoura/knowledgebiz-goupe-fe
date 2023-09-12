@@ -2,7 +2,7 @@
     <div class="layout-wrapper layout-content-navbar">
         <div class="layout-container">
             <!-- Menu -->
-            <Aside >
+            <Aside />
 
             <!-- / Menu -->
 
@@ -70,7 +70,7 @@
                                                     </div>
                                                 </div>
                                                 <span class="fw-semibold d-block mb-1">Total hours</span>
-                                                <h3 class="card-title mb-2">{{ hours }}h</h3>
+                                                <h3 class="card-title mb-2">0h</h3>
                                                 <small class="text-success fw-semibold"><i class="bx bx-up-arrow-alt"></i>
                                                     +0%</small>
                                             </div>
@@ -296,8 +296,10 @@
                                                             :data-bs-target="`#modalEdit${atividade.id_activities}`"
                                                             class="dropdown-item" href="javascript:void(0);"><i
                                                                 class="bx bx-edit-alt me-1"></i> Edit</a>
-                                                        <a class="dropdown-item" @click="handleDelete(atividade.id_activities)" href="javascript:void(0);"><i
-                                                                class="bx bx-trash me-1"></i> Delete</a>
+                                                        <a class="dropdown-item"
+                                                            @click="handleDelete(atividade.id_activities)"
+                                                            href="javascript:void(0);"><i class="bx bx-trash me-1"></i>
+                                                            Delete</a>
                                                     </div>
 
                                                     <div class="modal fade" :id="`modalEdit${atividade.id_activities}`"
@@ -391,13 +393,12 @@
     </div>
 </template>
 <script>
-import Aside from '../../../components/aside/index.vue';
-import Navbar from '../../../components/navbar/index.vue';
-import Footer from '../../../components/footer/index.vue';
+import Aside from '../../components/aside/index.vue';
+import Navbar from '../../components/navbar/index.vue';
+import Footer from '../../components/footer/index.vue';
 import VueJwtDecode from "vue-jwt-decode";
-import api from '../../../services/projects/index'
-import apirest from '../../../services/activities/index'
-import moment from 'moment';
+import api from '../../services/projects/index'
+import apirest from '../../services/activities/index'
 
 
 export default {
@@ -410,6 +411,7 @@ export default {
     data() {
         return {
             projects: [],
+            selectedProjectId: null,
             time: 0,
             isRunning: false,
             hasStarted: false,
@@ -429,15 +431,12 @@ export default {
             atididades: [],
             hours: '',
             atividade: {
-                time: '08:00:00', // Exemplo de valor inicial
+                time: '08:00:00',
             },
             newPercentage: 0,
             success: false,
             myproject: ''
-
-
-
-
+            
         };
     },
     mounted() {
@@ -456,12 +455,11 @@ export default {
             this.myproject = resposta.totalProjects;
         });
 
+        this.fetchProjects();
 
-        api.list().then((resposta) => {
-            this.projects = resposta.data.response;
-        });
 
         apirest.listatividade().then((resposta) => {
+            console.log(resposta.data.response)
             this.atididades = resposta.data.response;
         });
 
@@ -493,6 +491,20 @@ export default {
     },
 
     methods: {
+        async fetchProjects() {
+            try {
+
+                const response = await api.myproject();
+                this.projects = response.data.response;
+
+                console.log(response)
+            } catch (error) {
+                console.error('Erro ao buscar projetos:', error);
+            }
+        },
+
+
+
         startTimer() {
             this.isRunning = true;
             this.hasStarted = true;
@@ -520,10 +532,11 @@ export default {
             this.isRunning = false;
             clearInterval(this.timerInterval);
 
-            const totalSecondsInWorkDay = 8 * 3600; 
+            const totalSecondsInWorkDay = 8 * 3600;
             const percentage = (this.time / totalSecondsInWorkDay) * 100;
 
-            this.dateToday = new Date();
+            this.dateToday = new Date().toISOString().split('T')[0];
+
             this.timeAll = this.formattedTime
             this.porcentage = percentage.toFixed(2)
 
@@ -538,7 +551,7 @@ export default {
             this.selectedProject = null;
         },
 
-        async handleDelete(idAtividade){
+        async handleDelete(idAtividade) {
 
             await apirest.deleteatividade(idAtividade)
 

@@ -124,10 +124,11 @@
     </div>
 </template>
 <script>
-import Aside from '../../../components/aside/index.vue';
-import Navbar from '../../../components/navbar/index.vue';
-import Footer from '../../../components/footer/index.vue';
-import api from '../../../services/auth/index'
+import Aside from '../../components/aside/index.vue';
+import Navbar from '../../components/navbar/index.vue';
+import Footer from '../../components/footer/index.vue';
+import api from '../../services/auth/index'
+import apip from '../../services/projects/index'
 export default {
     name: 'Project-cad',
     data() {
@@ -155,12 +156,14 @@ export default {
         api.users().then((resposta) => {
             this.selectUsers = resposta.data.response;
         });
+
+
     },
     methods: {
 
         async handleProject() {
 
-            try {
+        
                 let projectname = this.projectname
                 let manager = this.selectedUser
                 let description = this.description
@@ -169,7 +172,7 @@ export default {
                 let dateEnd = this.dateEnd
                 let client = this.client
 
-                const res = await api.project(
+                const res = await apip.project(
                     projectname,
                     manager,
                     description,
@@ -185,12 +188,9 @@ export default {
                     location.reload();
                 }, 3000);
 
-
-            } catch (error) {
-                console.error(error);
-            }
+            },
         }
-    }
+    
 
 
 

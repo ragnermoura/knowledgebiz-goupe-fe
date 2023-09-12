@@ -96,9 +96,9 @@ export default {
 
         const image = await apiUpload.getAvatar()
 
-        if(image.status == 200){
+        if(image.status == 200 && image?.data.image.avatar != null){
             console.log(image)
-            this.image = `http://localhost:3000${image.data?.image?.avatar}`
+            this.image = `http://localhost:3000/${image.data?.image?.avatar}`
         } else {
             this.image = `../../../../src/assets/img/avatars/1.png`
         }

@@ -180,12 +180,12 @@
     </div>
 </template>
 <script>
-import Aside from '../../../components/aside/index.vue';
-import Navbar from '../../../components/navbar/index.vue';
-import Footer from '../../../components/footer/index.vue';
+import Aside from '../../components/aside/index.vue';
+import Navbar from '../../components/navbar/index.vue';
+import Footer from '../../components/footer/index.vue';
 import VueJwtDecode from "vue-jwt-decode";
-import api from '../../../services/projects/index'
-import apirest from '../../../services/activities/index'
+import api from '../../services/projects/index'
+import apirest from '../../services/activities/index'
 
 
 
@@ -199,13 +199,12 @@ export default {
     data() {
         return {
             atividades: [],
-            filteredActivities: [], 
+            filteredActivities: [],
             searchQuery: '',
             searchDate: '',
         };
     },
     mounted() {
-
         let token = localStorage.getItem('token')
         let decode = VueJwtDecode.decode(token);
 
@@ -215,25 +214,19 @@ export default {
         this.name = name
         this.idUser = decode.id_user
 
-
         api.list().then((resposta) => {
             this.projects = resposta.data.response;
         });
 
         apirest.listatividadefull().then((resposta) => {
             this.atividades = resposta.data.response;
+            this.filteredActivities = this.atividades;
         });
-
-
-
-
-
-
     },
 
 
-    methods: {
 
+    methods: {
         searchActivities() {
             const filteredActivities = this.atividades.filter(atividade => {
                 const includesQuery = atividade.tb_project.projectname.toLowerCase().includes(this.searchQuery.toLowerCase());
@@ -243,8 +236,7 @@ export default {
 
             this.filteredActivities = filteredActivities;
         },
-
-    },
+    }
 }
 
 </script>
