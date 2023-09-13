@@ -414,7 +414,7 @@ export default {
       let atividade = this.atividade
       let data = this.selectedDate
       let tempo = inteiroParaHora(percentage?.toFixed(2))
-      let pocentagem = percentage?.toFixed(2)
+      let pocentagem = this.timeSpent
       let bloqueio = this.blockage
       let deadline = this.deadline
       let observation = this.observation
@@ -425,7 +425,7 @@ export default {
 
       const dataSelecionada = new Date(data);
       const dataAtual = new Date();
-
+     
       if (dataSelecionada <= dataAtual && idProjects != null && data != null && data != null) {
         const res = await apiActivities.atividade(atividade, data, tempo, pocentagem, bloqueio, deadline, observation, name, idUser, idProjects)
         if (res.status === 201) {
@@ -436,7 +436,7 @@ export default {
       } else {
         this.msgError = true
       }
-
+ 
     }
   },
 };

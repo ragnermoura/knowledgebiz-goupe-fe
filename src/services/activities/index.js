@@ -44,6 +44,20 @@ export default {
         
     },
 
+
+    editAtividade: (idAtividade, body) => {
+        return http.patch(`/atividade/edit/${idAtividade}`, body, {
+            headers: {
+                "Content-Type": "application/json",
+                "Access-Control-Allow-Headers": "*",
+                "Access-Control-Allow-Methods": "OPTIONS,POST,GET",
+            },
+
+            
+        });
+        
+    },
+
     listatividadefull: () => {
         let token = localStorage.getItem('token');
         let decode = VueJwtDecode.decode(token);

@@ -358,7 +358,7 @@
 
                                                                 </div>
                                                                 <div class="modal-footer">
-                                                                    <button class="btn btn-warning" type="submit">
+                                                                    <button class="btn btn-warning" @click="updateActivity(atividade)">
                                                                         Edit
                                                                     </button>
                                                                 </div>
@@ -614,7 +614,24 @@ export default {
             const formattedTime = `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
 
             this.atividade.time = formattedTime;
+
         },
+        async updateActivity(item){
+
+            console.log(item?.id_activities)
+            
+            const  body = {
+                percentage: this.newPercentage,
+                time: this.calculatedTime
+            }
+            console.log(body)
+
+            const res = await apirest.editAtividade(item?.id_activities, body)
+
+           if(res.status == 200){
+            location.reload()
+           }
+        }
     },
 }
 
