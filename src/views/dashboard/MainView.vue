@@ -36,7 +36,7 @@
                                         </div>
                                         <div class="col-sm-5 text-center text-sm-left">
                                             <div class="card-body pb-0 px-0 px-md-4">
-                                                <img src="../../../../src/assets/img/illustrations/man-with-laptop-light.png"
+                                                <img src="../../../src/assets/img/illustrations/man-with-laptop-light.png"
                                                     height="140" alt="View Badge User"
                                                     data-app-dark-img="illustrations/man-with-laptop-dark.png"
                                                     data-app-light-img="illustrations/man-with-laptop-light.png" />
@@ -52,7 +52,7 @@
                                             <div class="card-body">
                                                 <div class="card-title d-flex align-items-start justify-content-between">
                                                     <div class="avatar flex-shrink-0">
-                                                        <img src="../../../../src/assets/img/icons/unicons/chart-success.png"
+                                                        <img src="../../../src/assets/img/icons/unicons/chart-success.png"
                                                             alt="chart success" class="rounded" />
                                                     </div>
                                                     <div class="dropdown">
@@ -81,7 +81,7 @@
                                             <div class="card-body">
                                                 <div class="card-title d-flex align-items-start justify-content-between">
                                                     <div class="avatar flex-shrink-0">
-                                                        <img src="../../../../src/assets/img/icons/unicons/wallet-info.png"
+                                                        <img src="../../../src/assets/img/icons/unicons/wallet-info.png"
                                                             alt="Credit Card" class="rounded" />
                                                     </div>
                                                     <div class="dropdown">
@@ -358,7 +358,8 @@
 
                                                                 </div>
                                                                 <div class="modal-footer">
-                                                                    <button class="btn btn-warning" @click="updateActivity(atividade)">
+                                                                    <button class="btn btn-warning"
+                                                                        @click="updateActivity(atividade)">
                                                                         Edit
                                                                     </button>
                                                                 </div>
@@ -436,13 +437,21 @@ export default {
             newPercentage: 0,
             success: false,
             myproject: ''
-            
+
         };
     },
     mounted() {
 
         let token = localStorage.getItem('token')
         let decode = VueJwtDecode.decode(token);
+
+
+        if (token == null) {
+            window.location.href = "/";
+        } else if (token == '') {
+            window.location.href = "/";
+        }
+
 
         let name = decode.firstname
         let lastname = decode.lastname
@@ -451,21 +460,19 @@ export default {
         this.idUser = decode.id_user
 
         api.listtotal().then((resposta) => {
-            console.log(resposta)
-            this.myproject = resposta.totalProjects;
-        });
+            
+             this.myproject = resposta.totalProjects;
+         });
 
         this.fetchProjects();
 
 
         apirest.listatividade().then((resposta) => {
-            console.log(resposta.data.response)
+            
             this.atididades = resposta.data.response;
         });
 
-        apirest.listatotal().then((resposta) => {
-            this.hours = resposta.data.totalResult;
-        });
+       
 
     },
     computed: {
@@ -497,7 +504,7 @@ export default {
                 const response = await api.myproject();
                 this.projects = response.data.response;
 
-                console.log(response)
+                
             } catch (error) {
                 console.error('Erro ao buscar projetos:', error);
             }
@@ -616,21 +623,21 @@ export default {
             this.atividade.time = formattedTime;
 
         },
-        async updateActivity(item){
+        async updateActivity(item) {
 
             console.log(item?.id_activities)
-            
-            const  body = {
+
+            const body = {
                 percentage: this.newPercentage,
                 time: this.calculatedTime
             }
-            console.log(body)
+            
 
             const res = await apirest.editAtividade(item?.id_activities, body)
 
-           if(res.status == 200){
-            location.reload()
-           }
+            if (res.status == 200) {
+                location.reload()
+            }
         }
     },
 }

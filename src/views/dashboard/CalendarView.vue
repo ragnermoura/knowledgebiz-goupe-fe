@@ -258,7 +258,8 @@ export default {
         eventDurationEditable: true,
         myproject: '',
         success: true,
-        msgError: false
+        msgError: false,
+        myproject: ''
       },
     };
   },
@@ -294,9 +295,25 @@ export default {
     let token = localStorage.getItem('token')
     let decode = VueJwtDecode.decode(token);
 
+
+    if (token == null) {
+      window.location.href = "/";
+    } else if (token == '') {
+      window.location.href = "/";
+    }
+
+
     this.idUser = decode.id_user
 
-    api.list().then((resposta) => {
+    api.listtotal().then((resposta) => {
+            
+            this.myproject = resposta.totalProjects;
+        });
+
+       this.fetchProjects();
+
+
+    api.listtotal().then((resposta) => {
       this.projects = resposta.data.response;
     });
 
@@ -425,7 +442,7 @@ export default {
 
       const dataSelecionada = new Date(data);
       const dataAtual = new Date();
-     
+
       if (dataSelecionada <= dataAtual && idProjects != null && data != null && data != null) {
         const res = await apiActivities.atividade(atividade, data, tempo, pocentagem, bloqueio, deadline, observation, name, idUser, idProjects)
         if (res.status === 201) {
@@ -436,7 +453,7 @@ export default {
       } else {
         this.msgError = true
       }
- 
+
     }
   },
 };

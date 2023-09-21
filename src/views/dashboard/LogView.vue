@@ -28,15 +28,14 @@
 
                         </div>
                         <div class="card mt-5">
-                            <h5 class="card-header">Summary <a href="javascript:;"
-                                    class="btn btn-sm btn-outline-primary">Today</a></h5>
+                            <h5 class="card-header">Summary </h5>
                             <div class="table-responsive text-nowrap">
                                 <div class="row container mb-4">
                                     <div class="mb-3 col-md-8">
                                         <label for="organization" class="form-label">Search by the name of the project or
                                             activity</label>
                                         <input type="text" class="form-control" id="organization" name="organization"
-                                            placeholder="Senior Developer" v-model="searchQuery"
+                                            placeholder="Search" v-model="searchQuery"
                                             @input="searchActivities" />
                                     </div>
                                     <div class="mb-3 col-md-4">
@@ -99,11 +98,13 @@
                                                             <div class="modal-content">
                                                                 <div class="modal-header">
                                                                     <h5 class="modal-title" id="modalToggleLabel">Edit your
-                                                                        time</h5>
+                                                                        time
+                                                                    </h5>
                                                                     <button type="button" class="btn-close"
                                                                         data-bs-dismiss="modal" aria-label="Close"></button>
                                                                 </div>
                                                                 <div class="modal-body">
+
                                                                     <div class="row">
                                                                         <div class="mb-3 col-md-12">
                                                                             <label for="firstName"
@@ -115,7 +116,7 @@
                                                                         </div>
                                                                         <div class="mb-3 col-md-12">
                                                                             <label for="firstName"
-                                                                                class="form-label">Activity</label>
+                                                                                class="form-label">Activitity</label>
                                                                             <input class="form-control" disabled type="text"
                                                                                 id="time" :value="atividade.activity"
                                                                                 autofocus />
@@ -141,12 +142,15 @@
                                                                                 id="percentage" v-model="newPercentage"
                                                                                 @input="updateTime" />
                                                                         </div>
-                                                                        <hr />
+                                                                        <hr>
                                                                     </div>
+
                                                                 </div>
                                                                 <div class="modal-footer">
                                                                     <button class="btn btn-warning"
-                                                                        type="submit">Edit</button>
+                                                                        @click="updateActivity(atividade)">
+                                                                        Edit
+                                                                    </button>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -235,6 +239,31 @@ export default {
             });
 
             this.filteredActivities = filteredActivities;
+        },
+
+        async updateActivity(item) {
+
+            console.log(item?.id_activities)
+
+            const body = {
+                percentage: this.newPercentage,
+                time: this.calculatedTime
+            }
+
+
+            const res = await apirest.editAtividade(item?.id_activities, body)
+
+            if (res.status == 200) {
+                location.reload()
+            }
+        },
+
+        async handleDelete(idAtividade) {
+
+            await apirest.deleteatividade(idAtividade)
+
+            window.location.reload()
+
         },
     }
 }

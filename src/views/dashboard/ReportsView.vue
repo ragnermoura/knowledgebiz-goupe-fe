@@ -200,6 +200,14 @@ export default {
         let token = localStorage.getItem('token')
         let decode = VueJwtDecode.decode(token);
 
+
+        if (token == null) {
+            window.location.href = "/";
+        } else if (token == '') {
+            window.location.href = "/";
+        }
+
+
         let name = decode.firstname
         let lastname = decode.lastname
 
@@ -212,7 +220,7 @@ export default {
 
         apirest.listatividadefull2().then((resposta) => {
 
-            
+
             this.atividades = resposta.data.response;
             this.filteredActivities = this.atividades;
         });

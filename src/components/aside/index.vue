@@ -38,7 +38,7 @@
       <li class="menu-item" hidden v-if="dev">
         <a href="/calendar" class="menu-link">
           <i class="menu-icon tf-icons bx bx-circle"></i>
-          <div data-i18n="Analytics">My requests  </div>
+          <div data-i18n="Analytics">My requests </div>
         </a>
       </li>
       <li class="menu-item" hidden v-if="admin">
@@ -76,7 +76,7 @@
       <li class="menu-item" v-if="dev">
         <a href=" " class="menu-link">
           <i class="menu-icon tf-icons bx bxs-doughnut-chart"></i>
-          <div data-i18n="Analytics">My activities  <small class="text-danger">| Blocked</small></div>
+          <div data-i18n="Analytics">My activities <small class="text-danger">| Blocked</small></div>
         </a>
       </li>
       <li class="menu-header small text-uppercase">
@@ -104,6 +104,12 @@
         <a href="#" class="menu-link">
           <i class="menu-icon tf-icons bx bx-user"></i>
           <div data-i18n="Analytics">My teams</div>
+        </a>
+      </li>
+      <li class="menu-item" @click="handleLogout">
+        <a href="#" class="menu-link">
+          <i class="menu-icon tf-icons bx bx-power-off"></i>
+          <div data-i18n="Analytics">Log-out</div>
         </a>
       </li>
 
@@ -137,27 +143,42 @@ export default {
       dev: false,
       name: '',
       lastname: '',
-     
+
     }
   },
   mounted() {
     let token = localStorage.getItem('token')
     let decode = VueJwtDecode.decode(token);
 
-    if(decode)
+    if (token == null) {
+      window.location.href = "/";
+    }else if( token == ''){
+      window.location.href = "/";
+    }
 
     if (decode.id_nivel == 2) {
       this.dev = true
       this.admin = false
-      
+
     }
     if (decode.id_nivel == 1) {
       this.dev = false
       this.admin = true
-      
+
     }
 
 
+
+
+  },
+  methods: {
+    async handleLogout() {
+      localStorage.removeItem('token')
+
+      window.location.href = "/";
+
+
+    }
   }
 }
 </script>
