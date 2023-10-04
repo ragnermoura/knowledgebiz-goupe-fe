@@ -100,7 +100,7 @@ export default {
             console.log(image)
             this.image = `http://localhost:3000/${image.data?.image?.avatar}`
         } else {
-            this.image = `../../../../src/assets/img/avatars/1.png`
+            this.image = `../../../../../assets/img/avatars/1.png`
         }
     },
     methods: {

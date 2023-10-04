@@ -52,7 +52,7 @@
                             <!-- Connections -->
                             <div class="d-flex mb-3">
                               <div class="flex-shrink-0">
-                                <img src="../../../src/assets/img/icons/brands/google.png" alt="google" class="me-3"
+                                <img src="../../../../assets/img/icons/brands/google.png" alt="google" class="me-3"
                                   height="30" />
 
                               </div>
@@ -70,7 +70,7 @@
                             </div>
                             <div class="d-flex mb-3">
                               <div class="flex-shrink-0">
-                                <img src="../../../src/assets/img/icons/brands/slack.png" alt="slack" class="me-3"
+                                <img src="../../../../assets/img/icons/brands/slack.png" alt="slack" class="me-3"
                                   height="30" />
                               </div>
                               <div class="flex-grow-1 row">
@@ -87,7 +87,7 @@
                             </div>
                             <div class="d-flex mb-3">
                               <div class="flex-shrink-0">
-                                <img src="../../../src/assets/img/icons/brands/github.png" alt="github" class="me-3"
+                                <img src="../../../../assets/img/icons/brands/github.png" alt="github" class="me-3"
                                   height="30" />
                               </div>
                               <div class="flex-grow-1 row">

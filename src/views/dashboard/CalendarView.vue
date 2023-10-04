@@ -317,7 +317,7 @@ export default {
       this.projects = resposta.data.response;
     });
 
-    apiActivities.listatividade().then(res => {
+    apiActivities.listatividadeunic().then(res => {
       this.dataActivities = res.data?.response/* 
         console.log(res.data?.response) */
       //this.calendarOptions?.events = []

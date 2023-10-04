@@ -3,7 +3,7 @@
     <div class="app-brand demo">
       <a href="/" class="app-brand-link">
         <span class="app-brand-logo demo">
-          <img src="../../../src/assets/img/logo/logoKbz.png" width="200" alt="">
+          <img src="../../../../assets/img/logo/logoKbz.png" width="200" alt="">
         </span>
       </a>
 

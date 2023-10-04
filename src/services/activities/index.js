@@ -95,6 +95,19 @@ export default {
         });
     },
 
+    listatividadeunic: () => {
+        let token = localStorage.getItem('token');
+        let decode = VueJwtDecode.decode(token);
+        let userId = decode.id_user;
+        return http.get(`/atividade/unic/${userId}`, {
+            headers: {
+                "Content-Type": "application/json",
+                "Access-Control-Allow-Headers": "*",
+                "Access-Control-Allow-Methods": "OPTIONS,POST,GET",
+            },
+        });
+    },
+
     listatotal: () => {
         return http.get("/atividade/total", {
             headers: {
