@@ -191,8 +191,6 @@ import VueJwtDecode from "vue-jwt-decode";
 import api from '../../services/projects/index'
 import apirest from '../../services/activities/index'
 
-
-
 export default {
     name: 'MainDashboard',
     components: {
