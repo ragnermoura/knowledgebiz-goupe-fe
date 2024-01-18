@@ -50,12 +50,15 @@
                             </a>
                         </li>
                         
-                       
+                        <a class="dropdown-item" href="/you-profile">
+                                <i class="bx bx-user me-2"></i>
+                                <span class="align-middle">You Profile</span>
+                            </a>
                         <li>
                             <div class="dropdown-divider"></div>
                         </li>
                         <li>
-                            <a class="dropdown-item" @click="handleLogout">
+                            <a class="dropdown-item" href="#" @click="handleLogout">
                                 <i class="bx bx-power-off me-2"></i>
                                 <span class="align-middle">Log Out</span>
                             </a>

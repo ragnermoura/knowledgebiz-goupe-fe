@@ -22,12 +22,31 @@
           <div data-i18n="Analytics">Dashboard</div>
         </a>
       </li>
+
+      <li class="menu-header small text-uppercase" v-if="admin">
+        <span class="menu-header-text">Dashboard</span>
+      </li>
+
+      <li class="menu-item" v-if="admin">
+        <a href="/you-overview" class="menu-link">
+          <i class="menu-icon tf-icons bx bxs-user"></i>
+          <div data-i18n="Analytics">Team</div>
+        </a>
+      </li>
+      <li class="menu-item" v-if="admin">
+        <a href="/overview-reports " class="menu-link">
+          <i class="menu-icon tf-icons bx bxs-report"></i>
+          <div data-i18n="Analytics">Reports</div>
+        </a>
+      </li>
       <li class="menu-item" v-if="admin">
         <a href="/report" class="menu-link">
           <i class="menu-icon tf-icons bx bxs-copy-alt"></i>
 
           <div data-i18n="Analytics">Reports</div>
         </a>
+
+
       </li>
       <li class="menu-item" v-if="dev">
         <a href="/calendar" class="menu-link">
@@ -48,6 +67,17 @@
         </a>
       </li>
 
+      <li class="menu-header small text-uppercase">
+        <span class="menu-header-text">List</span>
+      </li>
+
+      <li class="menu-item" v-if="admin">
+        <a href="/list-team" class="menu-link">
+          <i class="menu-icon tf-icons bx bx-list-check"></i>
+          <div data-i18n="Analytics">List Team</div>
+        </a>
+      </li>
+
 
       <!-- Layouts -->
 
@@ -63,8 +93,8 @@
       </li>
       <li class="menu-item" v-if="admin">
         <a href="/project" class="menu-link">
-          <i class="menu-icon tf-icons bx bx-edit"></i>
-          <div data-i18n="Analytics">Projects</div>
+          <i class="menu-icon tf-icons bx bx-plus"></i>
+          <div data-i18n="Analytics">New Project</div>
         </a>
       </li>
       <li class="menu-item" hidden v-if="admin">
@@ -106,30 +136,6 @@
           <div data-i18n="Analytics">My teams</div>
         </a>
       </li>
-      <li class="menu-item" @click="handleLogout">
-        <a href="#" class="menu-link">
-          <i class="menu-icon tf-icons bx bx-power-off"></i>
-          <div data-i18n="Analytics">Log-out</div>
-        </a>
-      </li>
-
-      <!-- Cards -->
-
-      <!-- User interface -->
-
-
-      <!-- Extended components -->
-
-
-
-
-      <!-- Forms & Tables -->
-
-
-      <!-- Tables -->
-
-
-
     </ul>
   </aside>
 </template>
@@ -152,7 +158,7 @@ export default {
 
     if (token == null) {
       window.location.href = "/";
-    }else if( token == ''){
+    } else if (token == '') {
       window.location.href = "/";
     }
 

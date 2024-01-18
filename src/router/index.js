@@ -59,15 +59,22 @@ const router = createRouter({
       component: () => import('../views/dashboard/AccountView.vue')
     },
     {
-      path: '/account-user-stacks',
-      name: 'account-user-stacks',
-      component: () => import('../views/dashboard/AccountStackView.vue')
+      path: '/you-profile',
+      name: 'you-profile',
+      component: () => import('../views/dashboard/ProfileView.vue')
     },
     {
-      path: '/account-user-connections',
-      name: 'account-user-connections',
-      component: () => import('../views/dashboard/AccountConnView.vue')
+      path: '/you-overview',
+      name: 'you-overview',
+      component: () => import('../views/dashboard/OverView.vue')
     },
+
+    {
+      path: '/overview-reports',
+      name: 'overview-reports',
+      component: () => import('../views/dashboard/OverViewReports.vue')
+    },
+  
   ]
 })
 
