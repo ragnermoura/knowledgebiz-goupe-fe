@@ -109,9 +109,22 @@
 
                                 <div class="card mb-4">
                                     <div class="card-body">
-                                        <h5 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Team operational
-                                                /</span>
-                                            Project</h5>
+                                        <div class="row">
+
+                                            <div class="col-10">
+                                                <h5 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">
+                                                Team operational/</span> Project</h5>
+                                            </div>
+                                            <div class="col-2 mt-3" style="position:absolute; right: 0">
+                                                
+                                            <button @click="addInput" class="btn btn-primary me-2" style="width: 15px; height: 30px; justify-content: center; align-items: center; text-align: center"><i style="margin-left: -9px; margin-right: auto; display:block;" class="bx bx-plus"></i></button>
+
+                                                <button @click="removeInput"
+                                                class="btn btn-danger me-2" style="background-color: rgb(230, 75, 40); width: 15px; height: 30px; justify-content: center; align-items: center; text-align: center"><i style="margin-left: -9px; margin-right: auto; display:block;" class="bx bx-minus"></i></button>
+                                        </div>
+                                      </div>
+
+                                      
                                         <div class="row" v-for="(input, index) in userPositions" :key="index">
                                             <!-- People Input -->
                                             <div class="mb-3 col-md-6">
@@ -126,7 +139,7 @@
                                                 </select>
                                             </div>
                                             <!-- Position Input -->
-                                            <div class="mb-3 col-md-4">
+                                            <div class="mb-3 col-md-6">
                                                 <label for="organization" class="form-label">Position</label>
                                                 <select v-model="input.position" class="select2 form-select">
                                                     <option value="" disabled>Select position</option>
@@ -135,14 +148,7 @@
                                                 </select>
                                             </div>
 
-                                            <div class="mb-3 col-md-1 mt-4">
-                                                <button @click="addInput" style="background-color: rgb(3, 238, 120);"
-                                                    class="btn btn-success me-2"><i class="bx bx-plus"></i></button>
-                                            </div>
-                                            <div class="mb-3 col-md-1 mt-4">
-                                                <button @click="removeInput" style="background-color: rgb(230, 75, 40);"
-                                                    class="btn btn-danger me-2"><i class="bx bx-minus"></i></button>
-                                            </div>
+
                                         </div>
                                         <!-- Add/Remove Buttons -->
 
@@ -255,7 +261,7 @@
                                             <div class="mt-2 col-md-6">
                                                 <button type="reset" style="width: 100%;"
                                                     class="btn btn-outline-secondary">Cancel</button>
-                                            </div>  
+                                            </div>
                                         </div>
 
                                     </div>

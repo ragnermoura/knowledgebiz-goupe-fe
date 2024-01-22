@@ -48,7 +48,18 @@
                             </div>
 
                             <hr>
-                            <div class="col-md-3" v-for="(utilizador, index) in utilizadores" :key="index">
+                            <div class="row col-12 mb-3" style="width: 100%;">
+                                <div class="mt-2 col-12" style="display: flex; justify-content: flex-end;">
+                                    <button type="button" class="btn  me-2" @click="handleList"><i
+                                            class='bx bx-list-ul'></i> List</button>
+                                    <button type="button" class="btn  me-2" @click="handleCard"><i
+                                            class='bx bxs-layout'></i> Cards</button>
+                                </div>
+
+                            </div>
+                            <a v-if="card" style="text-decoration: none; color: #566a7f" class="col-md-3"
+                                v-for="(utilizador, index) in utilizadores" :key="index" data-bs-toggle="modal"
+                                :href="`#ModalUser${utilizador.id_user}`">
                                 <div class="card mb-4">
                                     <div class="row">
                                         <div class="tags-status"><i class='bx bxs-sun'></i> Férias</div>
@@ -62,7 +73,10 @@
                                     <div v-if="utilizador.avatar == null" class="preview-name">
                                         <h1 class="text-center" style="margin-top: 30%;">{{ utilizador.iniciais }}</h1>
                                     </div>
-                                    <div v-if="utilizador.avatar != null" class="preview"></div>
+                                    <div v-if="utilizador.avatar != null" class="preview">
+                                        <img :src="'http://localhost:3000/' + utilizador.avatar" width="120" height="120"
+                                            alt="">
+                                    </div>
                                     <p class="text-center mt-2"><i class='bx bx-user'></i>{{ utilizador.firstname }} {{
                                         utilizador.lastname }}</p>
                                     <p v-if="utilizador.id_nivel == 1" class="text-center"
@@ -83,6 +97,87 @@
                                     </div>
 
                                 </div>
+
+
+                                <div class="modal fade" :id="`ModalUser${utilizador.id_user}`" tabindex="-1"
+                                    aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog modal-xl">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                    aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <ul class="nav nav-tabs" id="myTab" role="tablist">
+                                                    <li class="nav-item" role="presentation">
+                                                        <button class="nav-link active" id="home-tab" data-bs-toggle="tab"
+                                                            data-bs-target="#home" type="button" role="tab"
+                                                            aria-controls="home" aria-selected="true">Home</button>
+                                                    </li>
+                                                    <li class="nav-item" role="presentation">
+                                                        <button class="nav-link" id="profile-tab" data-bs-toggle="tab"
+                                                            data-bs-target="#profile" type="button" role="tab"
+                                                            aria-controls="profile" aria-selected="false">Profile</button>
+                                                    </li>
+                                                    <li class="nav-item" role="presentation">
+                                                        <button class="nav-link" id="contact-tab" data-bs-toggle="tab"
+                                                            data-bs-target="#contact" type="button" role="tab"
+                                                            aria-controls="contact" aria-selected="false">Contact</button>
+                                                    </li>
+                                                </ul>
+                                                <div class="tab-content" id="myTabContent">
+                                                    <div class="tab-pane fade show active" id="home" role="tabpanel"
+                                                        aria-labelledby="home-tab">...</div>
+                                                    <div class="tab-pane fade" id="profile" role="tabpanel"
+                                                        aria-labelledby="profile-tab">...</div>
+                                                    <div class="tab-pane fade" id="contact" role="tabpanel"
+                                                        aria-labelledby="contact-tab">...</div>
+                                                </div>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary"
+                                                    data-bs-dismiss="modal">Close</button>
+                                                <button type="button" class="btn btn-primary">Save changes</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+
+
+
+                            </a>
+
+                            <div v-if="list">
+                                <div class="card mb-4">
+                                    <div class="card-body">
+                                        <table class="table">
+                                            <thead>
+                                                <tr>
+                                                    <th scope="col">#</th>
+                                                    <th scope="col">First Name</th>
+                                                    <th scope="col">Last Name</th>
+                                                    <th scope="col">Projects</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr v-for="(utilizador, index) in utilizadores">
+
+                                                    <td>Mark</td>
+                                                    <td>Mark</td>
+                                                    <td>Otto</td>
+                                                    <td>@mdo</td>
+                                                </tr>
+
+
+                                            </tbody>
+                                        </table>
+                                    </div>
+
+                                </div>
+
                             </div>
 
 
@@ -118,7 +213,45 @@ export default {
         return {
             utilizadores: '',
             totalTeam: '',
-            totalprojects: ''
+            totalprojects: '',
+            showTextAreaBlocage: false,
+            showTextAreaOverdue: false,
+            firstname: '',
+            lastname: '',
+            password: '',
+            confirmPass: '',
+            position: '',
+            phone: '',
+            address: '',
+            email: '',
+            isLoading: false,
+            zipcode: '',
+            country: '',
+            language: '',
+            birthday: '',
+            level: '',
+            selectedFile: null,
+            previewUrl: null,
+            mainDetails: true,
+            finances: false,
+            evaluation: false,
+            vacations: false,
+            stacks: false,
+            projects: false,
+            msg_success: false,
+            msg_email_error: false,
+            activeButton: 'account',
+            allprojects: '',
+            addressQuery: '',
+            addressResults: [],
+            showAddressResults: true,
+            list: false,
+            card: true,
+
+            frontendStacks: ['React', 'Angular', 'Vue', 'Flutter Web', 'Laravel', 'React-Native', 'CSS', 'JavaScript', 'HTML5'],
+            backendStacks: ['Node.js', 'Python', 'Java', 'Ruby', 'PHP', 'C#', 'Go', 'Scala', 'Kotlin'],
+            cloudStacks: ['Azure', 'AWS (Amazon Web Services)', 'Google Cloud Platform', 'IBM Cloud', 'Oracle Cloud', 'DigitalOcean'],
+            databaseStacks: ['MySQL', 'PostgreSQL', 'MongoDB', 'Microsoft SQL Server', 'Oracle Database', 'Redis', 'Cassandra', 'Firebase']
 
         };
     },
@@ -152,6 +285,100 @@ export default {
             this.totalTeam = totalUsuarios;
         });
     },
+
+    methods: {
+
+        selectAddress(result) {
+            this.address = result.formatted;
+            let zipCode = result.components.postcode || '';
+            this.zipcode = zipCode;
+            this.addressResults = [];
+            this.showAddressResults = true;
+        },
+        async searchAddress() {
+            if (!this.addressQuery) return;
+
+            this.isLoading = true;
+            try {
+                const response = await axios.get(`https://api.opencagedata.com/geocode/v1/json`, {
+                    params: {
+                        q: this.addressQuery,
+                        key: '1f64d822c44341f38692b2b37ec70e64',
+                        language: 'pt',
+                        countrycode: 'pt',
+                    },
+                });
+                this.addressResults = response.data.results;
+            } catch (error) {
+                console.error('Error fetching address:', error);
+            } finally {
+                this.isLoading = false;
+            }
+        },
+
+
+        handleList() {
+            this.list = true
+            this.card = false
+        },
+
+        handleCard() {
+            this.list = false
+            this.card = true
+        },
+
+        handleAccount() {
+            this.mainDetails = true
+            this.stacks = false
+            this.projects = false
+            this.finances = false
+            this.evaluation = false
+            this.vacations = false
+            this.activeButton = 'account';
+        },
+        handleStack() {
+            this.mainDetails = false
+            this.stacks = true
+            this.projects = false
+            this.activeButton = 'stacks';
+        },
+        handleProjects() {
+            this.projects = true
+            this.mainDetails = false
+            this.stacks = false
+            this.finances = false
+            this.evaluation = false
+            this.vacations = false
+            this.activeButton = 'projects';
+        },
+        handleFinances() {
+            this.finances = true
+            this.mainDetails = false
+            this.stacks = false
+            this.projects = false
+            this.evaluation = false
+            this.vacations = false
+            this.activeButton = 'finances';
+        },
+        handleEvaluations() {
+            this.evaluation = true
+            this.mainDetails = false
+            this.stacks = false
+            this.projects = false
+            this.finances = false
+            this.vacations = false
+            this.activeButton = 'evaluation';
+        },
+        handleVacations() {
+            this.vacations = true
+            this.mainDetails = false
+            this.stacks = false
+            this.projects = false
+            this.finances = false
+            this.evaluation = false
+            this.activeButton = 'vacations';
+        },
+    }
 
 
 }
@@ -218,6 +445,5 @@ export default {
     border-radius: 6px;
     font-size: 12px;
     text-align: center;
-}
-</style>
+}</style>
   

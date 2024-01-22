@@ -50,50 +50,38 @@ export default {
       });
   },
 
-  cadastro: (youFirstname, youLastname, youEmail, youPass) => {
-    http
-      .post(
-        "/usuarios/cadastro",
-        {
-          firstname: youFirstname,
-          lastname: youLastname,
-          email: youEmail,
-          senha: youPass,
-          status: 1,
-          nivel: 2,
-        },
+  cadastro: (firstName, lastName, password, email, position, birthday, phone, address, zipcode, country, language, level) => {
+    return http.post("/usuarios/cadastro", {
+      firstname: firstName,
+      lastname: lastName,
+      email: email,
+      senha: password,
+      position: position,
+      birthday: birthday,
+      phonenumber: phone,
+      address: address,
+      zipcode: zipcode,
+      country: country,
+      language: language,
+      status: 1,
+      nivel: level,
+    }, {
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+        "Access-Control-Allow-Headers": "*",
+        "Access-Control-Allow-Methods": "OPTIONS,POST,GET",
+      },
+    })
+    .then((response) => {
+     return response
+    })
+    .catch((error) => {
+      console.log("Tem um error ========>", error);
 
-        {
-          headers: {
-            "Content-Type": "application/json",
-            Accept: "application/json",
-            "Access-Control-Allow-Headers": "*",
-            "Access-Control-Allow-Methods": "OPTIONS,POST,GET",
-          },
-        }
-      )
-      .then((response) => {
-
-        let idUser = response.data.usuarioCriado.id_user
-        localStorage.setItem('id', idUser)
-
-        window.location.href = "/you-project";
-
-        localStorage.removeItem('error')
-
-      })
-      .catch((error) => {
-        console.log("Tem um error ========>", error);
-
-        if(error.response.status == 409){
-          localStorage.setItem('error', 409)
-        }else if(error.response.status == 500){
-          localStorage.setItem('error', 500)
-        }
-
-        window.location.reload();
-      });
+    });
   },
+  
 
   projects: (selectedProjectIds, idUser) => {
     let id_user = localStorage.getItem('id')

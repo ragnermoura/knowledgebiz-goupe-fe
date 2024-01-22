@@ -92,6 +92,12 @@
         </a>
       </li>
       <li class="menu-item" v-if="admin">
+        <a href="/account-user" class="menu-link">
+          <i class="menu-icon tf-icons bx bx-dock-top"></i>
+          <div data-i18n="Analytics">New account</div>
+        </a>
+      </li>
+      <li class="menu-item" v-if="admin">
         <a href="/project" class="menu-link">
           <i class="menu-icon tf-icons bx bx-plus"></i>
           <div data-i18n="Analytics">New Project</div>
