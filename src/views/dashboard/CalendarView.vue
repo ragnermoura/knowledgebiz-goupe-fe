@@ -149,19 +149,25 @@
                       <div class="mb-3 row">
                         <label for="html5-text-input" class="col-md-4 col-form-label">Start date</label>
                         <div class="col-md-8">
-                          <input class="form-control" type="date" value="Sneat" id="html5-text-input" />
+                          <input class="form-control" type="date" v-model="dateStart" id="html5-text-input" />
                         </div>
                       </div>
                       <div class="mb-3 row">
                         <label for="html5-text-input" class="col-md-4 col-form-label">End date</label>
                         <div class="col-md-8">
-                          <input class="form-control" type="date" value="Sneat" id="html5-text-input" />
+                          <input class="form-control" type="date" v-model="dateEnd"  id="html5-text-input" />
+                        </div>
+                      </div>
+                      <div class="mb-3 row">
+                        <label for="html5-text-input" class="col-md-4 col-form-label">Your color</label>
+                        <div class="col-md-8">
+                          <input class="form-control" type="color" v-model="collor"  id="html5-text-input" />
                         </div>
                       </div>
                       <div class="mb-3 row">
                         <div class="col-md-8">
                           <div class="form-check form-switch mb-2">
-                            <input class="form-check-input" type="checkbox" id="flexSwitchCheckChecked" />
+                            <input class="form-check-input" v-model="birthday" type="checkbox" id="flexSwitchCheckChecked" />
                             <label class="form-check-label" for="flexSwitchCheckChecked">It's my birthday</label>
                           </div>
                         </div>
@@ -222,6 +228,11 @@ export default {
   name: "Main-Calendar",
   data() {
     return {
+      dateStart: '',
+      dateEnd: '',
+      collor: '',
+      birthday: '',
+
       projects: [],
       selectedProjectId: null,
       showTextAreaBlocage: false,
@@ -401,7 +412,6 @@ export default {
     async handleAtividade() {
 
 
-
       function inteiroParaHora(inteiro) {
         // Crie um novo objeto de data
         var data = new Date(0);
@@ -453,6 +463,16 @@ export default {
       } else {
         this.msgError = true
       }
+
+    },
+
+    async handleVacation(){
+
+      let dataStart = this.dateStart
+      let dataEnd = this.dateEnd
+      let Color = this.collor
+      let birthday = this.birthday
+
 
     }
   },

@@ -58,6 +58,8 @@
                       Vacations</button>
                   </li>
 
+                 
+
                 </ul>
 
 
@@ -814,6 +816,8 @@ export default {
 
         if (response.status == 200 || response.status == 201 || response.status == 204 || response.status == 202) {
           this.msg_success = true;
+
+       
 
           setTimeout(() => {
             this.msg_success = false;

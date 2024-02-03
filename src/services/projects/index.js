@@ -59,6 +59,17 @@ export default {
         })
     },
 
+    myprojectG: (user) => {
+ 
+        return http.get(`/project-user/project-por-user/${user}`, {
+            headers: {
+                "Content-Type": "application/json",
+                "Access-Control-Allow-Headers": "*",
+                "Access-Control-Allow-Methods": "OPTIONS,POST,GET",
+            },
+        })
+    },
+
 
     list: () => {
         return http.get("/projeto/", {

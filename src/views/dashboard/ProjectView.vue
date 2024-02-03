@@ -41,13 +41,14 @@
                                             </div>
                                             <div class="mb-3 col-md-6">
                                                 <label for="organization" class="form-label">Manager</label>
-                                                <select v-model="selectedUser" id="language" class="select2 form-select">
+                                                <select @change="capturarEscolha" v-model="selectedUser" id="language"
+                                                    class="select2 form-select">
                                                     <option value="" selected disabled>Select Manager</option>
                                                     <option value="To be determined">To be determined</option>
 
                                                     <option v-for="(user, index) in selectUsers"
                                                         :value="user.firstname + ' ' + user.lastname" :key="index">
-                                                        {{ user.firstname }}
+                                                        {{ user.firstname }} {{ user.lastname }}
                                                     </option>
                                                 </select>
                                             </div>
@@ -85,17 +86,17 @@
                                             </div>
                                             <div class="mb-3 col-md-3">
                                                 <label for="organization" class="form-label">Stack Fron-End</label>
-                                                <input type="text" placeholder="Name client" v-model="client"
+                                                <input type="text" placeholder="Ex.: VueJs" v-model="frontend"
                                                     class="form-control" id="organization" name="organization" />
                                             </div>
                                             <div class="mb-3 col-md-3">
                                                 <label for="organization" class="form-label">Stack Back-End</label>
-                                                <input type="text" placeholder="Name client" v-model="client"
+                                                <input type="text" placeholder="Ex.: NodeJs" v-model="backend"
                                                     class="form-control" id="organization" name="organization" />
                                             </div>
                                             <div class="mb-3 col-md-3">
                                                 <label for="organization" class="form-label">Stack Cloud</label>
-                                                <input type="text" placeholder="Name client" v-model="client"
+                                                <input type="text" placeholder="Ex.: Azure" v-model="cloud"
                                                     class="form-control" id="organization" name="organization" />
                                             </div>
 
@@ -113,18 +114,47 @@
 
                                             <div class="col-10">
                                                 <h5 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">
-                                                Team operational/</span> Project</h5>
+                                                        Team operational/</span> Project</h5>
                                             </div>
                                             <div class="col-2 mt-3" style="position:absolute; right: 0">
-                                                
-                                            <button @click="addInput" class="btn btn-primary me-2" style="width: 15px; height: 30px; justify-content: center; align-items: center; text-align: center"><i style="margin-left: -9px; margin-right: auto; display:block;" class="bx bx-plus"></i></button>
 
-                                                <button @click="removeInput"
-                                                class="btn btn-danger me-2" style="background-color: rgb(230, 75, 40); width: 15px; height: 30px; justify-content: center; align-items: center; text-align: center"><i style="margin-left: -9px; margin-right: auto; display:block;" class="bx bx-minus"></i></button>
+                                                <button @click="addInput" class="btn btn-primary me-2"
+                                                    style="width: 15px; height: 30px; justify-content: center; align-items: center; text-align: center"><i
+                                                        style="margin-left: -9px; margin-right: auto; display:block;"
+                                                        class="bx bx-plus"></i></button>
+
+                                                <button @click="removeInput" class="btn btn-danger me-2"
+                                                    style="background-color: rgb(230, 75, 40); width: 15px; height: 30px; justify-content: center; align-items: center; text-align: center"><i
+                                                        style="margin-left: -9px; margin-right: auto; display:block;"
+                                                        class="bx bx-minus"></i></button>
+                                            </div>
                                         </div>
-                                      </div>
 
-                                      
+                                        <div class="row">
+                                            <div class="mb-3 col-md-6">
+                                                <label for="organization" class="form-label">People</label>
+                                                <select @change="capturarEscolhaTwo" v-model="selectedTechlead"
+                                                    class="select2 form-select">
+                                                    <option value="" disabled>Select People</option>
+                                                    <option value="To be determined">To be determined</option>
+                                                    <option v-for="(user, uIndex) in selectUsers"
+                                                        :value="user.id_user" :key="uIndex">
+                                                        {{ user.firstname }} {{ user.lastname }}
+                                                    </option>
+                                                </select>
+                                            </div>
+
+                                            <div class="mb-3 col-md-6">
+                                                <label for="organization" class="form-label">Position</label>
+
+                                                <select v-model="positionTech" class="select2 form-select">
+                                                    <option value="" disabled>Select position</option>
+                                                    <option value="Techlead">TechLead</option>
+                                                </select>
+                                            </div>
+                                        </div>
+
+
                                         <div class="row" v-for="(input, index) in userPositions" :key="index">
                                             <!-- People Input -->
                                             <div class="mb-3 col-md-6">
@@ -132,9 +162,9 @@
                                                 <select v-model="input.user" class="select2 form-select">
                                                     <option value="" disabled>Select People</option>
                                                     <option value="To be determined">To be determined</option>
-                                                    <option v-for="(user, uIndex) in selectUsers" :value="user.firstname"
+                                                    <option v-for="(user, uIndex) in selectUsers" :value="user.id_user"
                                                         :key="uIndex">
-                                                        {{ user.firstname }}
+                                                        {{ user.firstname }} {{ user.lastname }}
                                                     </option>
                                                 </select>
                                             </div>
@@ -143,7 +173,6 @@
                                                 <label for="organization" class="form-label">Position</label>
                                                 <select v-model="input.position" class="select2 form-select">
                                                     <option value="" disabled>Select position</option>
-                                                    <option>TechLead</option>
                                                     <option>Developer</option>
                                                 </select>
                                             </div>
@@ -175,7 +204,7 @@
                                                     <button id="triggerUpload"
                                                         class="btn btncircle btn-primary me-2 mb-4"><i
                                                             style="margin-left: -10px;" class="bx bx-camera"></i></button>
-                                                    <input type="file" id="filePicker" />
+                                                            <input type="file" id="filePicker" />
                                                 </div>
                                             </section>
                                         </div>
@@ -191,14 +220,21 @@
 
                                             <div class="row">
                                                 <div class="col-md-12">
-                                                    <div class="picture-manager"></div>
+                                                    <div class="picture-manager">
+                                                        <img v-if="selectedUser" :src="getAvatar(selectedUser)"
+                                                            style="width: 63px; border-radius: 30px;" />
+                                                    </div>
                                                     <div class="container">
                                                         <div class="row">
                                                             <div class="tags text-center">Manager</div>
                                                         </div>
                                                     </div>
                                                     <div class="barra-vertical"></div>
-                                                    <div class="picture-manager mt-2"></div>
+                                                    <div class="picture-manager mt-2">
+                                                        <img v-if="selectedTechlead"
+                                                            :src="getAvatarTechlead(selectedTechlead)"
+                                                            style="width: 63px; border-radius: 30px;" />
+                                                    </div>
                                                     <div class="container">
                                                         <div class="row">
                                                             <div class="tags text-center">Techlead</div>
@@ -292,7 +328,8 @@ import Aside from '../../components/aside/index.vue';
 import Navbar from '../../components/navbar/index.vue';
 import Footer from '../../components/footer/index.vue';
 import api from '../../services/auth/index'
-import apip from '../../services/projects/index'
+import apip from '../../services/projects/index';
+import VueJwtDecode from "vue-jwt-decode";
 export default {
     name: 'Project-cad',
     data() {
@@ -301,16 +338,24 @@ export default {
             showTextAreaOverdue: false,
             selectUsers: [],
             selectedUser: null,
+            selectedTechlead: null,
             projectname: '',
             description: '',
             repository: '',
             dateStart: '',
             dateEnd: '',
             client: '',
+            frontend: '',
+            backend: '',
+            cloud: '',
             success: false,
             userPositions: [
                 { user: '', position: '' }
             ],
+            input: {
+            user: '',
+            position: ''
+        },
 
 
         };
@@ -323,7 +368,10 @@ export default {
 
     mounted() {
         api.users().then((resposta) => {
-            this.selectUsers = resposta.data.response;
+            this.selectUsers = resposta.data.response.map(user => ({
+                ...user,
+                avatar: 'http://localhost:3000/' + user.avatar,
+            }));
         });
 
         var triggerUpload = document.getElementById('triggerUpload'),
@@ -374,9 +422,24 @@ export default {
     },
     methods: {
 
+        capturarEscolha() {
+            console.log("Opção escolhida:", this.selectedUser);
+        },
+        capturarEscolhaTwo() {
+            console.log("Opção escolhida:", this.selectedTechlead);
+        },
+
+        getAvatar(selectedUser) {
+            const user = this.selectUsers.find(u => (u.firstname + ' ' + u.lastname) === selectedUser);
+            return user ? user.avatar : 'http://localhost:3000';
+        },
+
+        getAvatarTechlead(selectedTechlead) {
+            const user = this.selectUsers.find(u => (u.id_user) === selectedTechlead);
+            return user ? user.avatar : 'http://localhost:3000';
+        },
+
         async handleProject() {
-
-
             let projectname = this.projectname
             let manager = this.selectedUser
             let description = this.description
@@ -384,6 +447,9 @@ export default {
             let dateStart = this.dateStart
             let dateEnd = this.dateEnd
             let client = this.client
+            let frontend = this.frontend
+            let backend = this.backend
+            let cloud = this.cloud
 
             const res = await apip.project(
                 projectname,
@@ -392,16 +458,48 @@ export default {
                 repository,
                 dateStart,
                 dateEnd,
-                client
+                client,
+                frontend,
+                backend,
+                cloud
             );
 
-            this.success = true
+            let token = localStorage.getItem('token')
+            let decode = VueJwtDecode.decode(token);
+
+            let idUser = decode.id_user
+
+            const projectData = [];
+
+            projectData.push({
+                id_project: res.response.id_project,
+                id_user: idUser,
+                position: this.positionTech
+            });
+
+            this.userPositions.forEach(input => {
+                projectData.push({
+                    id_project: res.response.id_project,
+                    id_user: input.user,
+                    position: input.position
+                });
+            });
+
+            console.log(projectData);
+
+
+                this.success = true
 
             setTimeout(() => {
-                location.reload();
+                //  location.reload();
             }, 3000);
 
+
+
+
         },
+
+
 
 
 
@@ -415,8 +513,6 @@ export default {
         }
 
     }
-
-
 
 
 }

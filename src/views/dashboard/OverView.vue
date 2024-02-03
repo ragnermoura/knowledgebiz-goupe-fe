@@ -58,8 +58,8 @@
 
                             </div>
                             <a v-if="card" style="text-decoration: none; color: #566a7f" class="col-md-3"
-                                v-for="(utilizador, index) in utilizadores" :key="index" data-bs-toggle="modal"
-                                :href="`#ModalUser${utilizador.id_user}`">
+                                v-for="(utilizador, index) in utilizadores" :key="index"
+                                :href="`/details-user?id=${utilizador.id_user}`">
                                 <div class="card mb-4">
                                     <div class="row">
                                         <div class="tags-status"><i class='bx bxs-sun'></i> Férias</div>
@@ -87,65 +87,14 @@
                                         Developer</p>
                                     <p class="text-center" style="margin-top: -15px; font-weight: 200;"><i
                                             class='bx bx-envelope'></i> {{ utilizador.email }}</p>
-                                    <div class="container">
+                                    <div class="container mb-4">
                                         <div class="row">
-                                            <div class="tags">#Singular-Routes</div>
-                                            <div class="tags">#Digiprime</div>
-                                            <div class="tags">#FMC</div>
-                                            <div class="tags">#Reunião</div>
+                                            <div v-for="nomeProjeto in utilizador.projetos" :key="nomeProjeto" class="tags">#{{ nomeProjeto }}
+                                            </div>
                                         </div>
                                     </div>
 
                                 </div>
-
-
-                                <div class="modal fade" :id="`ModalUser${utilizador.id_user}`" tabindex="-1"
-                                    aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                    <div class="modal-dialog modal-xl">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                    aria-label="Close"></button>
-                                            </div>
-                                            <div class="modal-body">
-                                                <ul class="nav nav-tabs" id="myTab" role="tablist">
-                                                    <li class="nav-item" role="presentation">
-                                                        <button class="nav-link active" id="home-tab" data-bs-toggle="tab"
-                                                            data-bs-target="#home" type="button" role="tab"
-                                                            aria-controls="home" aria-selected="true">Home</button>
-                                                    </li>
-                                                    <li class="nav-item" role="presentation">
-                                                        <button class="nav-link" id="profile-tab" data-bs-toggle="tab"
-                                                            data-bs-target="#profile" type="button" role="tab"
-                                                            aria-controls="profile" aria-selected="false">Profile</button>
-                                                    </li>
-                                                    <li class="nav-item" role="presentation">
-                                                        <button class="nav-link" id="contact-tab" data-bs-toggle="tab"
-                                                            data-bs-target="#contact" type="button" role="tab"
-                                                            aria-controls="contact" aria-selected="false">Contact</button>
-                                                    </li>
-                                                </ul>
-                                                <div class="tab-content" id="myTabContent">
-                                                    <div class="tab-pane fade show active" id="home" role="tabpanel"
-                                                        aria-labelledby="home-tab">...</div>
-                                                    <div class="tab-pane fade" id="profile" role="tabpanel"
-                                                        aria-labelledby="profile-tab">...</div>
-                                                    <div class="tab-pane fade" id="contact" role="tabpanel"
-                                                        aria-labelledby="contact-tab">...</div>
-                                                </div>
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary"
-                                                    data-bs-dismiss="modal">Close</button>
-                                                <button type="button" class="btn btn-primary">Save changes</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-
-
 
 
                             </a>
@@ -270,20 +219,40 @@ export default {
             this.allprojects = resposta.data.response;
         });
 
-        api.users().then((resposta) => {
+        api.users().then(async (resposta) => {
+            const usuarios = resposta.data.response;
+            const totalUsuarios = usuarios.length;
 
-            const totalUsuarios = resposta.data.response.length;
-            this.utilizadores = resposta.data.response.map(usuario => {
-
+            // Primeiro, criamos um array de usuários com as iniciais
+            let utilizadoresTemp = usuarios.map(usuario => {
                 const iniciais = usuario.firstname.charAt(0) + usuario.lastname.charAt(0);
-
                 return {
                     ...usuario,
-                    iniciais: iniciais.toUpperCase()
+                    iniciais: iniciais.toUpperCase(),
+                    projetos: []
                 };
             });
-            this.totalTeam = totalUsuarios;
+
+            const promessasDeProjetos = utilizadoresTemp.map(async (usuario) => {
+                try {
+                    const respostaProjeto = await apiProject.myprojectG(usuario.id_user);
+                    usuario.projetos = respostaProjeto.data.response.map(projeto => projeto.projectname);
+                } catch (error) {
+                    console.error("Erro ao buscar projetos do usuário:", error);
+                }
+                return usuario;
+            });
+
+            // Aguardamos todas as promessas serem resolvidas para finalizar a construção do array de utilizadores
+            this.utilizadores = await Promise.all(promessasDeProjetos);
+            this.totalTeam = totalUsuarios; // Atribui o total de usuários
         });
+
+
+
+
+
+
     },
 
     methods: {
@@ -445,5 +414,6 @@ export default {
     border-radius: 6px;
     font-size: 12px;
     text-align: center;
-}</style>
+}
+</style>
   

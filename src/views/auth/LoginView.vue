@@ -56,12 +56,7 @@
                             </div>
                         </form>
 
-                        <p class="text-center">
-                            <span>New on our platform?</span>
-                            <a href="/register">
-                                <span>Create an account</span>
-                            </a>
-                        </p>
+                       
                     </div>
                 </div>
                 <!-- /Register -->

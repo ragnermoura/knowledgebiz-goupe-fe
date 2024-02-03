@@ -39,9 +39,9 @@ export default {
       .catch((error) => {
         console.log("Tem um erro aqui ========>", error);
 
-        if(error.response.status == 401){
+        if (error.response.status == 401) {
           localStorage.setItem('error', 401)
-        }else if(error.response.status == 500){
+        } else if (error.response.status == 500) {
           localStorage.setItem('error', 500)
         }
 
@@ -73,25 +73,52 @@ export default {
         "Access-Control-Allow-Methods": "OPTIONS,POST,GET",
       },
     })
-    .then((response) => {
-     return response
-    })
-    .catch((error) => {
-      console.log("Tem um error ========>", error);
+      .then((response) => {
+        console.log(response)
+        return response
+      })
+      .catch((error) => {
+        console.log("Tem um error ========>", error);
 
+      });
+  },
+
+
+  projects: (selectedProjectIds, idUser) => {
+    return new Promise((resolve, reject) => {
+      http.post("/project-user/cadastro/",
+        {
+          id_projects: selectedProjectIds,
+          id_user: idUser,
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+            "Access-Control-Allow-Headers": "*",
+            "Access-Control-Allow-Methods": "OPTIONS,POST,GET",
+          },
+        }
+      ).then((response) => {
+        resolve(response); // Resolve a Promise com a resposta
+      }).catch((error) => {
+        console.log("Error ========>", error);
+        reject(error); // Rejeita a Promise com o erro
+      });
     });
   },
   
+  
 
-  projects: (selectedProjectIds, idUser) => {
-    let id_user = localStorage.getItem('id')
+  team: (people, position, id_project) => {
     http
       .post(
         "/project-user/cadastro/",
 
         {
-          id_projects: selectedProjectIds,
-          id_user: idUser,
+          id_project: id_project,
+          id_user: people,
+          position: position,
         },
 
         {
@@ -109,11 +136,22 @@ export default {
       .catch((error) => {
         console.log("Error ========>", error);
       });
+
   },
 
 
   list: () => {
     return http.get("/projeto/", {
+      headers: {
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Headers": "*",
+        "Access-Control-Allow-Methods": "OPTIONS,POST,GET",
+      },
+    })
+  },
+
+  userslists: (idDoUsuario) => {
+    return http.get(`/usuarios/${idDoUsuario}`, {
       headers: {
         "Content-Type": "application/json",
         "Access-Control-Allow-Headers": "*",

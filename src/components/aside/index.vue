@@ -15,6 +15,10 @@
     <div class="menu-inner-shadow"></div>
 
     <ul class="menu-inner py-1">
+
+      <li class="menu-header small text-uppercase">
+        <span class="menu-header-text">Main</span>
+      </li>
       <!-- Dashboard -->
       <li class="menu-item" v-if="dev">
         <a href="/dashboard-main-developer" class="menu-link">
@@ -50,8 +54,14 @@
       </li>
       <li class="menu-item" v-if="dev">
         <a href="/calendar" class="menu-link">
+          <i class="menu-icon tf-icons bx bxs-doughnut-chart"></i>
+          <div data-i18n="Analytics">My activities</div>
+        </a>
+      </li>
+      <li class="menu-item" v-if="dev">
+        <a href="/vacation" class="menu-link">
           <i class="menu-icon tf-icons bx bx-calendar"></i>
-          <div data-i18n="Analytics">My calendar</div>
+          <div data-i18n="Analytics">My vacation</div>
         </a>
       </li>
       <li class="menu-item" hidden v-if="dev">
