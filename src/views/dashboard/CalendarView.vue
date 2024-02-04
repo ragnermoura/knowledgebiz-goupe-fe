@@ -33,7 +33,7 @@
                         <i class="tf-icons bx bx-code"></i> Activities
                       </button>
                     </li>
-                    <li class="nav-item">
+                    <li hidden class="nav-item">
                       <button type="button" class="nav-link" role="tab" data-bs-toggle="tab"
                         data-bs-target="#navs-pills-justified-profile" aria-controls="navs-pills-justified-profile"
                         aria-selected="false">

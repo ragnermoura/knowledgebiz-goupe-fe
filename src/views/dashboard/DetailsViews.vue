@@ -198,12 +198,6 @@
                                                 </div>
 
 
-
-                                                <div class="mt-2">
-                                                    <button type="submit" class="btn btn-primary me-2">Edit account</button>
-                                                </div>
-
-
                                             </div>
                                         </form>
 
@@ -870,12 +864,9 @@ export default {
 
 
         api.userslists(idDoUsuario).then((resposta) => {
-            console.log(resposta.data.response)
-
+           
             const iniciais = resposta.data.response.firstname.charAt(0) + resposta.data.response.lastname.charAt(0);
             this.iniciais = iniciais.toUpperCase()
-
-
 
             this.firstname = resposta.data.response.firstname
             this.lastname = resposta.data.response.lastname

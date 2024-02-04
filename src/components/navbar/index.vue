@@ -21,7 +21,7 @@
                 <!-- Place this tag where you want the button to render. -->
                 <li class="nav-item lh-1 me-3">
                     <a class="github-button" href="#" data-icon="octicon-star" data-size="large" data-show-count="true"
-                        aria-label="Star themeselection/sneat-html-admin-template-free on GitHub">{{ nivelAccess }}</a>
+                        aria-label="">{{ name }} {{ lastname }}</a>
                 </li>
 
                 <!-- User -->
@@ -29,6 +29,7 @@
                     <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
                         <div class="avatar avatar-online">
                             <img :src="image" alt class="w-px-40 h-auto rounded-circle" />
+                            
                         </div>
                     </a>
                     <ul class="dropdown-menu dropdown-menu-end">
@@ -42,7 +43,7 @@
                                         </div>
                                     </div>
                                     <div class="flex-grow-1">
-                                        <span class="fw-semibold d-block">{{ name }}{{ lastname }}</span>
+                                        <span class="fw-semibold d-block">{{ name }} {{ lastname }}</span>
                                         <small class="text-muted">{{ nivelAccess }}</small>
                                     </div>
                                 </div>
@@ -86,7 +87,7 @@ export default {
         let token = localStorage.getItem('token')
         let decode = VueJwtDecode.decode(token);
 
-        this.lastname = decode.firstname
+        this.name = decode.firstname
         this.lastname = decode.lastname
 
 

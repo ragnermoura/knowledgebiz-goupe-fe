@@ -14,145 +14,100 @@
 
     <div class="menu-inner-shadow"></div>
 
-    <ul class="menu-inner py-1">
-
-      <li class="menu-header small text-uppercase">
-        <span class="menu-header-text">Main</span>
-      </li>
+    <ul class="menu-inner py-1" v-if="admin">
       <!-- Dashboard -->
-      <li class="menu-item" v-if="dev">
-        <a href="/dashboard-main-developer" class="menu-link">
-          <i class="menu-icon tf-icons bx bx-home-circle"></i>
-          <div data-i18n="Analytics">Dashboard</div>
-        </a>
-      </li>
-
-      <li class="menu-header small text-uppercase" v-if="admin">
+      <li class="menu-header small text-uppercase">
         <span class="menu-header-text">Dashboard</span>
       </li>
 
-      <li class="menu-item" v-if="admin">
+      <li class="menu-item">
         <a href="/you-overview" class="menu-link">
-          <i class="menu-icon tf-icons bx bxs-user"></i>
-          <div data-i18n="Analytics">Team</div>
+          <i class="menu-icon tf-icons bx bx-user"></i>
+          <div data-i18n="Analytics">My Team</div>
         </a>
       </li>
-      <li class="menu-item" v-if="admin">
-        <a href="/overview-reports " class="menu-link">
-          <i class="menu-icon tf-icons bx bxs-report"></i>
-          <div data-i18n="Analytics">Reports</div>
-        </a>
-      </li>
-      <li class="menu-item" v-if="admin">
-        <a href="/report" class="menu-link">
-          <i class="menu-icon tf-icons bx bxs-copy-alt"></i>
-
-          <div data-i18n="Analytics">Reports</div>
-        </a>
-
-
-      </li>
-      <li class="menu-item" v-if="dev">
-        <a href="/calendar" class="menu-link">
+      <li class="menu-item">
+        <a href="#" class="menu-link">
           <i class="menu-icon tf-icons bx bxs-doughnut-chart"></i>
-          <div data-i18n="Analytics">My activities</div>
+          <div data-i18n="Analytics">Drawings <small class="text-danger">| Blocked</small></div>
         </a>
       </li>
-      <li class="menu-item" v-if="dev">
-        <a href="/vacation" class="menu-link">
-          <i class="menu-icon tf-icons bx bx-calendar"></i>
-          <div data-i18n="Analytics">My vacation</div>
+      <li class="menu-item">
+        <a href="/report" class="menu-link">
+          <i class="menu-icon tf-icons bx bx-file"></i>
+          <div data-i18n="Analytics">Reports</div>
         </a>
       </li>
-      <li class="menu-item" hidden v-if="dev">
-        <a href="/calendar" class="menu-link">
-          <i class="menu-icon tf-icons bx bx-circle"></i>
-          <div data-i18n="Analytics">My requests </div>
-        </a>
-      </li>
-      <li class="menu-item" hidden v-if="admin">
-        <a href="/calendar" class="menu-link">
-          <i class="menu-icon tf-icons bx bx-mail-send"></i>
-          <div data-i18n="Analytics">Requests received</div>
-        </a>
-      </li>
+    
+     
 
       <li class="menu-header small text-uppercase">
-        <span class="menu-header-text">List</span>
+        <span class="menu-header-text">Manager</span>
       </li>
 
-      <li class="menu-item" v-if="admin">
-        <a href="/list-team" class="menu-link">
-          <i class="menu-icon tf-icons bx bx-list-check"></i>
-          <div data-i18n="Analytics">List Team</div>
-        </a>
-      </li>
-
-
-      <!-- Layouts -->
-
-
-      <li class="menu-header small text-uppercase">
-        <span class="menu-header-text">Main</span>
-      </li>
-      <li class="menu-item" v-if="dev">
-        <a href="/account-user" class="menu-link">
-          <i class="menu-icon tf-icons bx bx-dock-top"></i>
-          <div data-i18n="Analytics">Account Settings</div>
-        </a>
-      </li>
+    
       <li class="menu-item" v-if="admin">
         <a href="/account-user" class="menu-link">
-          <i class="menu-icon tf-icons bx bx-dock-top"></i>
-          <div data-i18n="Analytics">New account</div>
+          <i class="menu-icon tf-icons bx bx-user-plus"></i>
+          <div data-i18n="Analytics">Account <small class="text-success">| New Feature </small></div>
         </a>
       </li>
       <li class="menu-item" v-if="admin">
         <a href="/project" class="menu-link">
           <i class="menu-icon tf-icons bx bx-plus"></i>
-          <div data-i18n="Analytics">New Project</div>
+          <div data-i18n="Analytics">Project <small class="text-success">| New Feature </small></div>
         </a>
       </li>
-      <li class="menu-item" hidden v-if="admin">
-        <a href="" class="menu-link">
-          <i class="menu-icon tf-icons bx bxs-buildings"></i>
-          <div data-i18n="Analytics">Equipment/assets</div>
-        </a>
-      </li>
-      <li class="menu-item" v-if="dev">
-        <a href=" " class="menu-link">
-          <i class="menu-icon tf-icons bx bxs-doughnut-chart"></i>
-          <div data-i18n="Analytics">My activities <small class="text-danger">| Blocked</small></div>
-        </a>
-      </li>
+    
       <li class="menu-header small text-uppercase">
-        <span class="menu-header-text">Manager</span>
+        <span class="menu-header-text">Controller</span>
       </li>
-      <li class="menu-item" v-if="dev">
-        <a href="/log" class="menu-link">
-          <i class="menu-icon tf-icons bx bx-grid"></i>
-          <div data-i18n="Analytics">Logs</div>
-        </a>
-      </li>
-      <li class="menu-item" v-if="dev">
-        <a href="" class="menu-link">
-          <i class="menu-icon tf-icons bx bx-code"></i>
-          <div data-i18n="Analytics">My projects <small class="text-danger">| Blocked</small></div>
-        </a>
-      </li>
+    
       <li class="menu-item" v-if="admin">
         <a href="/all-project" class="menu-link">
           <i class="menu-icon tf-icons bx bx-list-check"></i>
           <div data-i18n="Analytics">All projects</div>
         </a>
       </li>
-      <li class="menu-item" hidden v-if="dev">
-        <a href="#" class="menu-link">
-          <i class="menu-icon tf-icons bx bx-user"></i>
-          <div data-i18n="Analytics">My teams</div>
+     
+    </ul>
+
+    <ul class="menu-inner py-1" v-if="dev">
+      <li class="menu-header small text-uppercase">
+        <span class="menu-header-text">Main</span>
+      </li>
+      <!-- Dashboard -->
+      <li class="menu-item">
+        <a href="/dashboard-main-developer" class="menu-link">
+          <i class="menu-icon tf-icons bx bx-home-circle"></i>
+          <div data-i18n="Analytics">Dashboard</div>
+        </a>
+      </li>
+
+      <li class="menu-item">
+        <a href="/calendar" class="menu-link">
+          <i class="menu-icon tf-icons bx bxs-doughnut-chart"></i>
+          <div data-i18n="Analytics">My activities</div>
+        </a>
+      </li>
+      <li class="menu-item">
+        <a href="/vacation-user" class="menu-link">
+          <i class="menu-icon tf-icons bx bx-calendar"></i>
+          <div data-i18n="Analytics">My vacation</div>
+        </a>
+      </li>
+      <li class="menu-header small text-uppercase">
+        <span class="menu-header-text">List</span>
+      </li>
+      <li class="menu-item">
+        <a href="/log" class="menu-link">
+          <i class="menu-icon tf-icons bx bx-grid"></i>
+          <div data-i18n="Analytics">Logs</div>
         </a>
       </li>
     </ul>
+
+
   </aside>
 </template>
 <script>

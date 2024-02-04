@@ -2,18 +2,15 @@ import { http } from "../config";
 import VueJwtDecode from "vue-jwt-decode";
 
 export default {
-
-
-    project: async (projectname, manager, description, repository, dateStart, dateEnd, client) => {
+    cadastro: async (dataStart, dataEnd, birthday, iduser) => {
         try {
-            const response = await http.post("/projeto/cadastro", {
-                projectname: projectname,
-                descriptions: description,
-                repository: repository,
-                data_start: dateStart,
-                data_end: dateEnd,
-                manager: manager,
-                client: client
+            const response = await http.post("/vacation/cadastro", {
+                date_start: dataStart,
+                date_end: dataEnd,
+                status: 2,
+                birthday: birthday,
+                id_user: iduser,
+                
             }, {
                 headers: {
                     "Content-Type": "application/json",
@@ -32,11 +29,12 @@ export default {
         }
     },
     
-    listtotal: () => {
+
+    myvacations: () => {
         let token = localStorage.getItem('token');
         let decode = VueJwtDecode.decode(token);
         let userId = decode.id_user;
-        return http.get(`/project-user/total/${userId}`, {
+        return http.get(`/vacation/user/${userId}`, {
             headers: {
                 "Content-Type": "application/json",
                 "Access-Control-Allow-Headers": "*",
@@ -45,31 +43,7 @@ export default {
         })
     },
 
-    myproject: () => {
-        let token = localStorage.getItem('token');
-        let decode = VueJwtDecode.decode(token);
-        let userId = decode.id_user;
-
-        return http.get(`/project-user/project-por-user/${userId}`, {
-            headers: {
-                "Content-Type": "application/json",
-                "Access-Control-Allow-Headers": "*",
-                "Access-Control-Allow-Methods": "OPTIONS,POST,GET",
-            },
-        })
-    },
-
-    myprojectG: (user) => {
- 
-        return http.get(`/project-user/project-por-user/${user}`, {
-            headers: {
-                "Content-Type": "application/json",
-                "Access-Control-Allow-Headers": "*",
-                "Access-Control-Allow-Methods": "OPTIONS,POST,GET",
-            },
-        })
-    },
-
+  
     list: () => {
         return http.get("/projeto/", {
             headers: {

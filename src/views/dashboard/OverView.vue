@@ -89,7 +89,8 @@
                                             class='bx bx-envelope'></i> {{ utilizador.email }}</p>
                                     <div class="container mb-4">
                                         <div class="row">
-                                            <div v-for="nomeProjeto in utilizador.projetos" :key="nomeProjeto" class="tags">#{{ nomeProjeto }}
+                                            <div v-for="nomeProjeto in utilizador.projetos" :key="nomeProjeto" class="tags">
+                                                #{{ nomeProjeto }}
                                             </div>
                                         </div>
                                     </div>
@@ -104,20 +105,34 @@
                                     <div class="card-body">
                                         <table class="table">
                                             <thead>
-                                                <tr>
-                                                    <th scope="col">#</th>
+                                                <tr class="text-center">
+                                                    <th scope="col"></th>
                                                     <th scope="col">First Name</th>
                                                     <th scope="col">Last Name</th>
+                                                    <th scope="col">E-mail</th>
                                                     <th scope="col">Projects</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <tr v-for="(utilizador, index) in utilizadores">
+                                                <tr v-for="(utilizador, index) in utilizadores" :key="index" class="text-center">
 
-                                                    <td>Mark</td>
-                                                    <td>Mark</td>
-                                                    <td>Otto</td>
-                                                    <td>@mdo</td>
+                                                    <td>
+                                                        <div v-if="utilizador.avatar == null" class="preview-name-table">
+                                                            <h1 class="text-center" style="margin-top: 30%;">{{
+                                                                utilizador.iniciais }}</h1>
+                                                        </div>
+                                                        <div v-if="utilizador.avatar != null" class="preview-table">
+                                                            <img :src="'http://localhost:3000/' + utilizador.avatar"
+                                                                width="50" height="50" alt="">
+                                                        </div>
+                                                    </td>
+                                                    <td>{{utilizador.firstname}}</td>
+                                                    <td>{{utilizador.lastname}}</td>
+                                                    <td>{{utilizador.email}}</td>
+                                                    <td> <div v-for="nomeProjeto in utilizador.projetos" :key="nomeProjeto" class="tags">
+                                                        #{{ nomeProjeto }}
+                                                    </div></td>
+                                                    <td><a :href="`/details-user?id=${utilizador.id_user}`" type="button"  class="btn btn-warning btn-sm">View User</a>                                                    </td>
                                                 </tr>
 
 
@@ -153,8 +168,8 @@
 import Aside from '../../components/aside/index.vue';
 import Navbar from '../../components/navbar/index.vue';
 import Footer from '../../components/footer/index.vue';
-import apiUpload from '../../services/upload/index'
-import apiProject from '../../services/projects/index'
+import apiProject from '../../services/projects/index';
+
 import api from '../../services/auth/index'
 export default {
     name: 'OverView',
@@ -210,20 +225,15 @@ export default {
         Footer
     },
     mounted() {
-
-        apiProject.list().then((resposta) => {
-            this.totalprojects = resposta.data.response.length;
-        });
-
         apiProject.list().then((resposta) => {
             this.allprojects = resposta.data.response;
+            this.totalprojects = resposta.data.response.length;
         });
 
         api.users().then(async (resposta) => {
             const usuarios = resposta.data.response;
             const totalUsuarios = usuarios.length;
 
-            // Primeiro, criamos um array de usuários com as iniciais
             let utilizadoresTemp = usuarios.map(usuario => {
                 const iniciais = usuario.firstname.charAt(0) + usuario.lastname.charAt(0);
                 return {
@@ -243,16 +253,9 @@ export default {
                 return usuario;
             });
 
-            // Aguardamos todas as promessas serem resolvidas para finalizar a construção do array de utilizadores
             this.utilizadores = await Promise.all(promessasDeProjetos);
-            this.totalTeam = totalUsuarios; // Atribui o total de usuários
+            this.totalTeam = totalUsuarios;
         });
-
-
-
-
-
-
     },
 
     methods: {
@@ -349,7 +352,6 @@ export default {
         },
     }
 
-
 }
 </script>
 
@@ -400,6 +402,38 @@ export default {
     margin-right: auto;
     display: block;
     margin-top: -30px;
+    border-radius: 100%;
+    overflow: hidden;
+    border: 3px solid #E0E0E0;
+}
+
+.preview-name-table {
+    position: relative;
+    width: 120px;
+    height: 120px;
+    background: #dbdbdb;
+    justify-content: center !important;
+    align-items: center !important;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+    margin-top: -30px;
+    border-radius: 100%;
+    overflow: hidden;
+    border: 3px solid #c9c9c9;
+
+}
+.preview-table {
+    position: relative;
+    width: 50px;
+    height: 50px;
+    background: #f2f2f2;
+    justify-content: center;
+    align-items: center;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+   
     border-radius: 100%;
     overflow: hidden;
     border: 3px solid #E0E0E0;

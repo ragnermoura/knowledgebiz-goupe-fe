@@ -22,10 +22,13 @@
                         <div class="row">
                             <div class="col-lg-8 mb-4 order-0">
                                 <div class="card">
-                                    <div class="d-flex align-items-end row">
-                                        <div class="col-sm-7">
+                                    <div style="display: flex; justify-content: flex-end;">
+                                    <img src="../../../assets/img/backgrounds/banner.png" style="width:70%; border-top-right-radius: 10px; border-bottom-right-radius: 10px;" />
+                                    </div>
+                                    <div class="d-flex align-items-end row" style="position: absolute;">
+                                        <div class="col-sm-9">
                                             <div class="card-body">
-                                                <h5 class="card-title text-primary">Hi, {{ name }}! 🎉</h5>
+                                                <h5 class="card-title text-primary">Hi, {{ name }} {{ lastname }}! 🎉</h5>
                                                 <p class="mb-4">
                                                     Don't forget to mark your tasks here. Every project counts :)
                                                 </p>
@@ -34,14 +37,7 @@
                                                     Register here</a>
                                             </div>
                                         </div>
-                                        <div class="col-sm-5 text-center text-sm-left">
-                                            <div class="card-body pb-0 px-0 px-md-4">
-                                                <img src="../../../assets/img/illustrations/man-with-laptop-light.png"
-                                                    height="140" alt="View Badge User"
-                                                    data-app-dark-img="illustrations/man-with-laptop-dark.png"
-                                                    data-app-light-img="illustrations/man-with-laptop-light.png" />
-                                            </div>
-                                        </div>
+
                                     </div>
                                 </div>
                             </div>
@@ -71,8 +67,7 @@
                                                 </div>
                                                 <span class="fw-semibold d-block mb-1">Total hours</span>
                                                 <h3 class="card-title mb-2">0h</h3>
-                                                <small class="text-success fw-semibold"><i class="bx bx-up-arrow-alt"></i>
-                                                    +0%</small>
+                                              
                                             </div>
                                         </div>
                                     </div>
@@ -99,9 +94,8 @@
                                                     </div>
                                                 </div>
                                                 <span>You Projects</span>
-                                                <h3 class="card-title text-nowrap mb-1">{{ myproject }}</h3>
-                                                <small class="text-success fw-semibold"><i class="bx bx-up-arrow-alt"></i>
-                                                    +0%</small>
+                                                <h3 class="card-title text-nowrap mb-1">0</h3>
+                                               
                                             </div>
                                         </div>
                                     </div>

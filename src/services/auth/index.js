@@ -83,7 +83,6 @@ export default {
       });
   },
 
-
   projects: (selectedProjectIds, idUser) => {
     return new Promise((resolve, reject) => {
       http.post("/project-user/cadastro/",
@@ -108,8 +107,6 @@ export default {
     });
   },
   
-  
-
   team: (people, position, id_project) => {
     http
       .post(
@@ -139,7 +136,6 @@ export default {
 
   },
 
-
   list: () => {
     return http.get("/projeto/", {
       headers: {
@@ -150,8 +146,8 @@ export default {
     })
   },
 
-  userslists: (idDoUsuario) => {
-    return http.get(`/usuarios/${idDoUsuario}`, {
+  userslistsUnic: (user) => {
+    return http.get(`/usuarios/${user}`, {
       headers: {
         "Content-Type": "application/json",
         "Access-Control-Allow-Headers": "*",
@@ -159,6 +155,17 @@ export default {
       },
     })
   },
+
+  userslists: (user) => {
+    return http.get(`/usuarios/${user}`, {
+      headers: {
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Headers": "*",
+        "Access-Control-Allow-Methods": "OPTIONS,POST,GET",
+      },
+    })
+  },
+
 
   users: () => {
     return http.get("/usuarios/", {
@@ -205,5 +212,36 @@ export default {
         console.log("Error ========>", error);
       });
   },
+
+
+  editPass: ( password, idUser ) => {
+    return http.patch("/usuarios/edit/pass", {
+     
+      id_user: idUser,
+      senha: password,
+
+    }, {
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+        "Access-Control-Allow-Headers": "*",
+        "Access-Control-Allow-Methods": "OPTIONS,POST,GET",
+      },
+    })
+      .then((response) => {
+
+        alert('Password changed, redirecting...')
+        window.location.href = "/";
+       
+        return response
+
+        
+      })
+      .catch((error) => {
+        console.log("Tem um error ========>", error);
+
+      });
+  },
+
 
 }
