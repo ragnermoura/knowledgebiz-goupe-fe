@@ -1,7 +1,7 @@
 <template id="Aside">
   <aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
     <div class="app-brand demo">
-      <a href="/" class="app-brand-link">
+      <a href="#" class="app-brand-link">
         <span class="app-brand-logo demo">
           <img src="../../../assets/img/logo/logoKbz.png" width="200" alt="">
         </span>
@@ -27,6 +27,12 @@
         </a>
       </li>
       <li class="menu-item">
+        <a href="/calendar" class="menu-link">
+          <i class="menu-icon tf-icons bx bxs-calendar-check"></i>
+          <div data-i18n="Analytics">My activities</div>
+        </a>
+      </li>
+      <li class="menu-item">
         <a href="#" class="menu-link">
           <i class="menu-icon tf-icons bx bxs-doughnut-chart"></i>
           <div data-i18n="Analytics">Drawings <small class="text-danger">| Blocked</small></div>
@@ -36,6 +42,13 @@
         <a href="/report" class="menu-link">
           <i class="menu-icon tf-icons bx bx-file"></i>
           <div data-i18n="Analytics">Reports</div>
+        </a>
+      </li>
+
+      <li class="menu-item">
+        <a href="/vacation-user" class="menu-link">
+          <i class="menu-icon tf-icons bx bx-calendar"></i>
+          <div data-i18n="Analytics">My vacation</div>
         </a>
       </li>
     

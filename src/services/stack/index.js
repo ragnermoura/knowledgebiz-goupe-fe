@@ -38,4 +38,14 @@ export default {
             },
         })
     },
+
+    listsStack: (idDoUsuario) => {
+        return http.get(`/stacks/${idDoUsuario}`, {
+            headers: {
+                "Content-Type": "application/json",
+                "Access-Control-Allow-Headers": "*",
+                "Access-Control-Allow-Methods": "OPTIONS,POST,GET",
+            },
+        })
+    },
 }

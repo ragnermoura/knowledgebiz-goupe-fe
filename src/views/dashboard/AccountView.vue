@@ -36,23 +36,23 @@
                         class="bx bx-user me-1"></i> New Account</button>
                   </li>
 
-                  <li class="nav-item">
+                  <li hidden class="nav-item">
                     <button :class="{ 'nav-link': true, 'active': activeButton === 'projects' }"
                       @click="handleProjects"><i class="bx bx-circle me-1"></i>
                       Projects</button>
                   </li>
 
-                  <li class="nav-item">
+                  <li hidden class="nav-item">
                     <button :class="{ 'nav-link': true, 'active': activeButton === 'finances' }"
                       @click="handleFinances"><i class="bx bx-dollar me-1"></i>
                       Finances</button>
                   </li>
-                  <li class="nav-item">
+                  <li hidden class="nav-item">
                     <button :class="{ 'nav-link': true, 'active': activeButton === 'evaluation' }"
                       @click="handleEvaluations"><i class="bx bx-star me-1"></i>
                       Evaluation</button>
                   </li>
-                  <li class="nav-item">
+                  <li hidden class="nav-item">
                     <button :class="{ 'nav-link': true, 'active': activeButton === 'vacations' }"
                       @click="handleVacations"><i class="bx bx-calendar me-1"></i>
                       Vacations</button>

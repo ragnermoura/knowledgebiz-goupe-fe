@@ -466,15 +466,7 @@ export default {
 
     },
 
-    async handleVacation(){
-
-      let dataStart = this.dateStart
-      let dataEnd = this.dateEnd
-      let Color = this.collor
-      let birthday = this.birthday
-
-
-    }
+   
   },
 };
 </script>

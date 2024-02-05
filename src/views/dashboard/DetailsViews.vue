@@ -201,115 +201,90 @@
                                             </div>
                                         </form>
 
-                                        <div class="row" v-if="stacks">
+                                        <div v-if="stacks">
+                                            <form class="row" @submit.prevent="handleChangeStacks">
+                                                <div class="col-md-6">
+                                                    <h6>What are your FrontEnd stacks?</h6>
+                                                    <div class="mb-3 row">
+                                                        <div class="col-md-8">
+                                                            <div class="form-check form-switch mb-2"
+                                                                v-for="(stack, index) in frontendStacks" :key="index">
+                                                                <input class="form-check-input"
+                                                                    v-model="selectedStacks.frontend[stack]" type="checkbox"
+                                                                    :id="'stackCheckbox' + index" />
+                                                                <label class="form-check-label"
+                                                                    :for="'stackCheckbox' + index">{{ stack }}</label>
+                                                            </div>
 
-                                            <div class="col-md-6">
-                                                <h6>What are your FrontEnd stacks?</h6>
-                                                <div class="mb-3 row">
-                                                    <div class="col-md-8">
-                                                        <div class="form-check form-switch mb-2"
-                                                            v-for="(stack, index) in frontendStacks" :key="index">
-                                                            <input class="form-check-input" type="checkbox"
-                                                                :id="'stackCheckbox' + index" />
-                                                            <label class="form-check-label"
-                                                                :for="'stackCheckbox' + index">{{ stack }}</label>
                                                         </div>
+                                                    </div>
 
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <h6>What are your BackEnd stacks?</h6>
+                                                    <div class="mb-3 row">
+                                                        <div class="col-md-8">
+                                                            <div class="form-check form-switch mb-2"
+                                                                v-for="(stack, index) in backendStacks" :key="index">
+                                                                <input class="form-check-input"
+                                                                    v-model="selectedStacks.backend[stack]" type="checkbox"
+                                                                    :id="'stackCheckbox' + index" />
+                                                                <label class="form-check-label"
+                                                                    :for="'stackCheckbox' + index">{{ stack }}</label>
+                                                            </div>
+
+                                                        </div>
+                                                    </div>
+                                                    <div class="mb-3 row">
+                                                        <div class="col-md-8">
+                                                            <div class="form-check form-switch mb-2">
+                                                                <input class="form-check-input" type="checkbox"
+                                                                    id="flexSwitchCheckChecked" />
+                                                                <label class="form-check-label"
+                                                                    for="flexSwitchCheckChecked">Other</label>
+                                                            </div>
+
+                                                        </div>
                                                     </div>
                                                 </div>
-                                                <div class="mb-3 row">
-                                                    <div class="col-md-8">
-                                                        <div class="form-check form-switch mb-2">
-                                                            <input class="form-check-input" type="checkbox"
-                                                                id="flexSwitchCheckChecked" />
-                                                            <label class="form-check-label"
-                                                                for="flexSwitchCheckChecked">Other</label>
+                                                <div class="col-md-6">
+                                                    <h6>What are your Cloud stacks?</h6>
+                                                    <div class="mb-3 row">
+                                                        <div class="col-md-8">
+                                                            <div class="form-check form-switch mb-2"
+                                                                v-for="(stack, index) in cloudStacks" :key="index">
+                                                                <input class="form-check-input"
+                                                                    v-model="selectedStacks.cloud[stack]" type="checkbox"
+                                                                    :id="'stackCheckbox' + index" />
+                                                                <label class="form-check-label"
+                                                                    :for="'stackCheckbox' + index">{{ stack }}</label>
+                                                            </div>
+
                                                         </div>
-
                                                     </div>
+
                                                 </div>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <h6>What are your BackEnd stacks?</h6>
-                                                <div class="mb-3 row">
-                                                    <div class="col-md-8">
-                                                        <div class="form-check form-switch mb-2"
-                                                            v-for="(stack, index) in backendStacks" :key="index">
-                                                            <input class="form-check-input" type="checkbox"
-                                                                :id="'stackCheckbox' + index" />
-                                                            <label class="form-check-label"
-                                                                :for="'stackCheckbox' + index">{{ stack }}</label>
+                                                <div class="col-md-6">
+                                                    <h6>What are your Database stacks?</h6>
+                                                    <div class="mb-3 row">
+                                                        <div class="col-md-8">
+                                                            <div class="form-check form-switch mb-2"
+                                                                v-for="(stack, index) in databaseStacks" :key="index">
+                                                                <input class="form-check-input"
+                                                                    v-model="selectedStacks.database[stack]" type="checkbox"
+                                                                    :id="'stackCheckbox' + index" />
+                                                                <label class="form-check-label"
+                                                                    :for="'stackCheckbox' + index">{{ stack }}</label>
+                                                            </div>
+
                                                         </div>
-
                                                     </div>
+
                                                 </div>
-                                                <div class="mb-3 row">
-                                                    <div class="col-md-8">
-                                                        <div class="form-check form-switch mb-2">
-                                                            <input class="form-check-input" type="checkbox"
-                                                                id="flexSwitchCheckChecked" />
-                                                            <label class="form-check-label"
-                                                                for="flexSwitchCheckChecked">Other</label>
-                                                        </div>
-
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <h6>What are your Cloud stacks?</h6>
-                                                <div class="mb-3 row">
-                                                    <div class="col-md-8">
-                                                        <div class="form-check form-switch mb-2"
-                                                            v-for="(stack, index) in cloudStacks" :key="index">
-                                                            <input class="form-check-input" type="checkbox"
-                                                                :id="'stackCheckbox' + index" />
-                                                            <label class="form-check-label"
-                                                                :for="'stackCheckbox' + index">{{ stack }}</label>
-                                                        </div>
-
-                                                    </div>
-                                                </div>
-                                                <div class="mb-3 row">
-                                                    <div class="col-md-8">
-                                                        <div class="form-check form-switch mb-2">
-                                                            <input class="form-check-input" type="checkbox"
-                                                                id="flexSwitchCheckChecked" />
-                                                            <label class="form-check-label"
-                                                                for="flexSwitchCheckChecked">Other</label>
-                                                        </div>
-
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <h6>What are your Database stacks?</h6>
-                                                <div class="mb-3 row">
-                                                    <div class="col-md-8">
-                                                        <div class="form-check form-switch mb-2"
-                                                            v-for="(stack, index) in databaseStacks" :key="index">
-                                                            <input class="form-check-input" type="checkbox"
-                                                                :id="'stackCheckbox' + index" />
-                                                            <label class="form-check-label"
-                                                                :for="'stackCheckbox' + index">{{ stack }}</label>
-                                                        </div>
-
-                                                    </div>
-                                                </div>
-                                                <div class="mb-3 row">
-                                                    <div class="col-md-8">
-                                                        <div class="form-check form-switch mb-2">
-                                                            <input class="form-check-input" type="checkbox"
-                                                                id="flexSwitchCheckChecked" />
-                                                            <label class="form-check-label"
-                                                                for="flexSwitchCheckChecked">Other</label>
-                                                        </div>
-
-                                                    </div>
-                                                </div>
-                                            </div>
-
-
+                                              
+                                            </form>
                                         </div>
+
                                         <div class="row" v-if="projects">
 
                                             <form @submit.prevent="handleProject()">
@@ -621,7 +596,7 @@
                                                 <div class="card">
                                                     <div class="card-body">
 
-                                                        <div class="mb-3 col-md-12">
+                                                        <div class="mb-3 col-md-5">
 
                                                             <div v-if="avatar == null" class="preview-name">
                                                                 <h1 class="text-center" style="margin-top: 2%;">{{ iniciais
@@ -634,8 +609,80 @@
                                                             </div>
                                                         </div>
 
+                                                        <hr>
 
-                                                        
+                                                        <div style="overflow: auto; max-height: 250px;">
+
+                                                            <div v-for="vacation in minhasvacations"
+                                                                :key="vacation.id_vacation" class="card mb-3"
+                                                                style="max-width: 540px; height: 170px;">
+                                                                <div class="row">
+
+                                                                    <div class="col-md-9">
+                                                                        <div class="card-body">
+                                                                            <p class="card-text"><strong><i
+                                                                                        class="bx bx-calendar"></i>
+                                                                                    Start:</strong> {{ vacation.date_start
+                                                                                    }}</p>
+                                                                            <p class="card-text"><strong><i
+                                                                                        class="bx bx-calendar"></i>
+                                                                                    End:</strong> {{ vacation.date_end }}
+                                                                            </p>
+
+                                                                            <div class="row">
+                                                                                <div class="col-6">
+                                                                                    <p v-if="vacation.birthday == 'Sim'"
+                                                                                        class="card-text text-success">🎉
+                                                                                        It's your
+                                                                                        birthday</p>
+                                                                                </div>
+                                                                                <div class="col-6">
+                                                                                    <p v-if="vacation.status == 2"
+                                                                                        class="card-text">
+                                                                                        <small class="text-warning">Awaiting
+                                                                                            approval</small>
+                                                                                    </p>
+                                                                                    <p v-if="vacation.status == 1"
+                                                                                        class="card-text">
+                                                                                        <small
+                                                                                            class="text-success">Approved</small>
+                                                                                    </p>
+                                                                                </div>
+
+                                                                            </div>
+
+
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-md-2"
+                                                                        style="margin-left: -20px; margin-top: 10px;">
+                                                                        <button v-if="vacation.status == 1" hidden
+                                                                            @click="handleCheckVacation(vacation.id_vacation)"
+                                                                            class="btn btn-success" type="sumit">
+                                                                            <i class="bx bx-check"></i>
+                                                                        </button>
+                                                                        <button v-if="vacation.status == 2"
+                                                                            @click="handleCheckVacation(vacation.id_vacation)"
+                                                                            class="btn btn-success" type="sumit">
+                                                                            <i class="bx bx-check"></i>
+                                                                        </button>
+                                                                        <button v-if="vacation.status == 1" hidden
+                                                                            @click="handleBanVacation(vacation.id_vacation)"
+                                                                            class="btn btn-danger mt-2" type="sumit">
+                                                                            <i class='bx bx-message-square-x'></i>
+                                                                        </button>
+                                                                        <button v-if="vacation.status == 2"
+                                                                            @click="handleBanVacation(vacation.id_vacation)"
+                                                                            class="btn btn-danger mt-2" type="sumit">
+                                                                            <i class='bx bx-message-square-x'></i>
+                                                                        </button>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+
+
 
                                                     </div>
                                                 </div>
@@ -757,12 +804,13 @@
 import Aside from '../../components/aside/index.vue';
 import Navbar from '../../components/navbar/index.vue';
 import Footer from '../../components/footer/index.vue';
-import apiUpload from '../../services/upload/index'
 import FullCalendar from "@fullcalendar/vue3";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import apiProject from '../../services/projects/index'
-import api from '../../services/auth/index'
-import Toast from '../../components/toast/index.vue'
+import apiVacation from '../../services/vacation/index'
+import api from '../../services/auth/index';
+import apiStack from '../../services/stack/index';
+
 import axios from 'axios';
 export default {
     name: 'Details',
@@ -773,6 +821,13 @@ export default {
             selectedProjectsList: [],
 
             msgeditProject: false,
+
+            selectedStacks: {
+                frontend: {},
+                backend: {},
+                cloud: {},
+                database: {}
+            },
 
             showTextAreaBlocage: false,
             showTextAreaOverdue: false,
@@ -814,6 +869,7 @@ export default {
             orders: false,
             equipaments: false,
             results: false,
+            usercolor: '',
             calendarOptions: {
                 plugins: [dayGridPlugin],
                 initialView: "dayGridMonth",
@@ -861,10 +917,8 @@ export default {
             this.fetchProjects()
         });
 
-
-
         api.userslists(idDoUsuario).then((resposta) => {
-           
+
             const iniciais = resposta.data.response.firstname.charAt(0) + resposta.data.response.lastname.charAt(0);
             this.iniciais = iniciais.toUpperCase()
 
@@ -880,10 +934,45 @@ export default {
             this.country = resposta.data.response.country
             this.language = resposta.data.response.language
             this.level = resposta.data.response.level
+            this.usercolor = resposta.data.response.color
+
+        });
+
+        apiVacation.vacationsuser(idDoUsuario).then((resposta) => {
+            let res = resposta.data.response
+            this.minhasvacations = res;
+
+            const events = resposta.data.response.map((item) => {
+                return {
+                    title: "🎉 Vacations" || "",
+                    start: item?.date_start,
+                    end: item?.date_end || "",
+                    color: this.usercolor || "",
+                    description: item?.activity || "",
+                };
+
+            });
+            this.calendarOptions.events = events
+        });
+
+        apiStack.listsStack(idDoUsuario).then((resposta) => {
+
+            this.selectedStacks = {
+                frontend: {},
+                backend: {},
+                cloud: {},
+                database: {}
+            };
+
+            const userStacks = resposta.data.response.map(stackObj => stackObj.stackname);
+            Object.keys(this.selectedStacks).forEach((category) => {
+                this[category + 'Stacks'].forEach((stack) => {
+                    this.selectedStacks[category][stack] = userStacks.includes(stack);
+                });
+            });
+        });
 
 
-
-        })
     },
 
     computed: {
@@ -921,8 +1010,6 @@ export default {
                 this.isLoading = false;
             }
         },
-
-
         async fetchProjects() {
             try {
                 let user = this.idUser;
@@ -937,7 +1024,6 @@ export default {
                 console.error("Erro ao buscar projetos selecionados:", error);
             }
         },
-
         async handleProject() {
             this.selectedProjectsList = this.allprojects.filter((project) => project.selected);
             const idUser = this.idUser;
@@ -1085,8 +1171,44 @@ export default {
                 }
 
             }
-        }
+        },
 
+        async handleCheckVacation(id_vacation) {
+
+            try {
+                const response = await apiVacation.approve(id_vacation);
+
+                setTimeout(() => {
+                    window.location.reload();
+                }, 1000);
+
+
+            }
+
+            catch (error) {
+                console.log("Tem um error ========>", error);
+            }
+
+        },
+
+        async handleBanVacation(id_vacation) {
+
+            try {
+                const response = await apiVacation.deletevacations(id_vacation);
+
+
+                setTimeout(() => {
+                    window.location.reload();
+                }, 1000);
+
+
+            }
+
+            catch (error) {
+                console.log("Tem um error ========>", error);
+            }
+
+        }
 
     }
 }

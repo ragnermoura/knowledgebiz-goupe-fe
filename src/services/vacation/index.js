@@ -10,7 +10,7 @@ export default {
                 status: 2,
                 birthday: birthday,
                 id_user: iduser,
-                
+
             }, {
                 headers: {
                     "Content-Type": "application/json",
@@ -19,16 +19,16 @@ export default {
                     "Access-Control-Allow-Methods": "OPTIONS,POST,GET"
                 }
             });
-    
+
             console.log(response.data); // Certifique-se de que a resposta é apropriada
-    
+
             return response.data;
         } catch (error) {
             console.error("An error occurred:", error);
             throw error; // Re-throw para lidar com o erro onde você chama a função project
         }
     },
-    
+
 
     myvacations: () => {
         let token = localStorage.getItem('token');
@@ -43,9 +43,8 @@ export default {
         })
     },
 
-  
-    list: () => {
-        return http.get("/projeto/", {
+    vacationsuser: (idDoUsuario) => {
+        return http.get(`/vacation/user/${idDoUsuario}`, {
             headers: {
                 "Content-Type": "application/json",
                 "Access-Control-Allow-Headers": "*",
@@ -53,6 +52,41 @@ export default {
             },
         })
     },
+
+    deletevacations: (id_vacation) => {
+        return http.delete(`/vacation/delete/${id_vacation}`, {
+            headers: {
+                "Content-Type": "application/json",
+                "Access-Control-Allow-Headers": "*",
+                "Access-Control-Allow-Methods": "OPTIONS,POST,GET",
+            },
+        })
+    },
+
+    approve: async (id_vacation) => {
+        try {
+            const response = await http.patch(`/vacation/status/${id_vacation}`, {
+                status: 1,
+            }, {
+                headers: {
+                    "Content-Type": "application/json",
+                    Accept: "application/json",
+                    "Access-Control-Allow-Headers": "*",
+                    "Access-Control-Allow-Methods": "OPTIONS,POST,GET"
+                }
+            });
+
+            console.log(response.data); // Certifique-se de que a resposta é apropriada
+
+            return response.data;
+        } catch (error) {
+            console.error("An error occurred:", error);
+            throw error; // Re-throw para lidar com o erro onde você chama a função project
+        }
+    },
+
+
+  
 
 
 

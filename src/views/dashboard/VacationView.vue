@@ -93,13 +93,52 @@
 
                                             <hr>
 
-                                            <div style="overflow: auto; max-height: 400px;">
-                                                <div v-for="vacation in minhasvacations"
-                                                    :key="vacation.id_vacation" class="card mb-3"
-                                                    style="max-width: 540px;">
-                                                 {{ vacation.date_start }}
+                                            <div style="overflow: auto; max-height: 250px;">
+
+                                                <div v-for="vacation in minhasvacations" :key="vacation.id_vacation"
+                                                    class="card mb-3" style="max-width: 540px; height: 170px;">
+                                                    <div class="row">
+
+                                                        <div class="col-md-9">
+                                                            <div class="card-body">
+                                                                <p class="card-text"><strong><i class="bx bx-calendar"></i>
+                                                                        Start:</strong> {{ vacation.date_start }}</p>
+                                                                <p class="card-text"><strong><i class="bx bx-calendar"></i>
+                                                                        End:</strong> {{ vacation.date_end }}</p>
+
+                                                                <div class="row">
+                                                                    <div class="col-6">
+                                                                        <p v-if="vacation.birthday == 'Sim'"
+                                                                            class="card-text text-success">🎉 It's your
+                                                                            birthday</p>
+                                                                    </div>
+                                                                    <div class="col-6">
+                                                                        <p v-if="vacation.status == 2" class="card-text">
+                                                                            <small class="text-warning">Awaiting
+                                                                                approval</small>
+                                                                        </p>
+                                                                        <p v-if="vacation.status == 1" class="card-text">
+                                                                            <small class="text-success">Approved</small></p>
+                                                                    </div>
+
+                                                                </div>
+
+
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-2" style="margin-left: -20px; margin-top: 10px;">
+                                                            <button @click="handleDeleteVacation(vacation.id_vacation)"
+                                                                class="btn btn-danger" type="sumit">
+                                                                <i class="bx bx-trash"></i>
+                                                            </button>
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </div>
+
+
+
+
                                         </div>
                                     </div>
                                 </div>
@@ -145,7 +184,6 @@ import Footer from "../../components/footer/index.vue";
 import FullCalendar from "@fullcalendar/vue3";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import VueJwtDecode from "vue-jwt-decode";
-import api from "../../services/projects/index";
 import apiVacation from "../../services/vacation/index";
 
 export default {
@@ -162,6 +200,7 @@ export default {
 
             name: '',
             idUser: '',
+            color: '',
 
             msgDate: false,
             msgbirthday: false,
@@ -209,26 +248,29 @@ export default {
         }
 
         this.idUser = decode.id_user
+        this.color = decode.color
+        let youcolor = this.color
 
         apiVacation.myvacations().then((resposta) => {
-
             let res = resposta.data.response
-            console.log('A resposta está aqui ', res)
-
             this.minhasvacations = res;
+
+            const events = resposta.data.response.map((item) => {
+                return {
+                    title: "🎉 Vacations" || "",
+                    start: item?.date_start,
+                    end: item?.date_end || "",
+                    color: youcolor || "",
+                    description: item?.activity || "",
+                };
+
+                
+            });
+            this.calendarOptions.events = events
         })
-
-
-
-
-
-
 
     },
     methods: {
-
-
-
 
         async handleVacation() {
 
@@ -246,11 +288,11 @@ export default {
             try {
                 const response = await apiVacation.cadastro(dataStart, dataEnd, birthday, iduser);
 
-                console.log('Olha isso ======> ' + response)
+
 
                 setTimeout(() => {
                     window.location.reload();
-                }, 3000);
+                }, 1000);
 
                 if (response.status == 200 || response.status == 201 || response.status == 204 || response.status == 202) {
 
@@ -280,6 +322,25 @@ export default {
                 }
 
             }
+        },
+
+        async handleDeleteVacation(id_vacation) {
+
+            try {
+                const response = await apiVacation.deletevacations(id_vacation);
+
+
+                setTimeout(() => {
+                    window.location.reload();
+                }, 1000);
+
+
+            }
+
+            catch (error) {
+                console.log("Tem um error ========>", error);
+            }
+
         }
     },
 };

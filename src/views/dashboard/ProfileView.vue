@@ -94,7 +94,7 @@
                   <div class="d-flex align-items-start align-items-sm-center gap-4" style="position: absolute;">
                     <div class="button-wrapper">
                       <div class="container" style="margin-bottom: 19px;">
-                        <div class="row" style="margin-top: 30%">
+                        <div class="row" style="margin-top: 20%">
                           <div class="col-4 mt-4">
                             <div v-if="avatar == null" class="preview-name">
                               <h1 class="text-center" style="margin-top: 30%;">{{ iniciais }}</h1>
