@@ -161,8 +161,8 @@
                       <div class="row" v-if="mainDetails">
                         <div class="mb-3 col-md-6">
                           <label for="organization" class="form-label">Position in the company</label>
-                          <input type="text" class="form-control" id="organization" name="organization"
-                             disabled :value="fieldPosition" />
+                          <input type="text" class="form-control" id="organization" name="organization" disabled
+                            :value="fieldPosition" />
                         </div>
                         <div class="mb-3 col-md-6">
                           <label class="form-label" for="phoneNumber">Phone Number</label>
@@ -174,23 +174,22 @@
                         </div>
                         <div class="mb-3 col-md-6">
                           <label for="address" class="form-label">Address</label>
-                          <input type="text" disabled class="form-control" :value="filedAddress" id="address" name="address"
-                             />
+                          <input type="text" disabled class="form-control" :value="filedAddress" id="address"
+                            name="address" />
                         </div>
 
                         <div class="mb-3 col-md-6">
                           <label for="zipCode" class="form-label">Zip Code</label>
-                          <input type="text" disabled class="form-control" id="zipCode" name="zipCode" :value="filedZipcode"
-                             maxlength="6" />
+                          <input type="text" disabled class="form-control" id="zipCode" name="zipCode"
+                            :value="filedZipcode" maxlength="6" />
                         </div>
                         <div class="mb-3 col-md-6">
                           <label class="form-label" for="country">Country of origin</label>
-                          <input type="text" disabled class="form-control" :value="filedCountry" id="address"
-                          />
+                          <input type="text" disabled class="form-control" :value="filedCountry" id="address" />
                         </div>
                         <div class="mb-3 col-md-6">
                           <label for="language" class="form-label">Native Language</label>
-                          <input type="text" disabled class="form-control" :value="filedLanguage" id="address"/>
+                          <input type="text" disabled class="form-control" :value="filedLanguage" id="address" />
                         </div>
 
 
@@ -329,6 +328,7 @@ import apiProject from '../../services/projects/index';
 import apiUpload from '../../services/upload/index';
 import api from '../../services/auth/index';
 import apiStack from '../../services/stack/index';
+import UAParser from 'ua-parser-js';
 export default {
   name: 'Profile',
   data() {
@@ -383,6 +383,10 @@ export default {
       filedZipcode: '',
       filedLanguage: '',
 
+      regiao: '',
+      plataforma:'',
+      enderecoIp: '',
+      navegador: ''
 
     };
   },
@@ -458,9 +462,67 @@ export default {
       this.projectSelecteds = res
     });
 
+    this.obterInformacoes();
+
 
   },
   methods: {
+
+    async obterEnderecoIP() {
+      try {
+        const response = await fetch('https://api.ipify.org?format=json');
+        const data = await response.json();
+        const enderecoIp = data.ip;
+        return enderecoIp;
+      } catch (error) {
+        console.error('Erro ao obter endereço IP:', error);
+      }
+    },
+
+    async obterRegiao(latitude, longitude) {
+      const url = `https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}`;
+      try {
+        const response = await fetch(url);
+        const data = await response.json();
+        const regiao = data.address.state || data.address.region || 'Região não encontrada';
+        return regiao;
+      } catch (error) {
+        console.error('Erro ao obter região:', error);
+      }
+    },
+
+    async obterInformacoes() {
+      const parser = new UAParser();
+      const resultado = parser.getResult();
+
+      const plataforma = resultado.os.name + " " + resultado.os.version;
+      const navegador = resultado.browser.name + " " + resultado.browser.version;
+
+      let regiao = '';
+      let enderecoIp = '';
+
+      if (navigator.geolocation) {
+        const posicao = await new Promise((resolve, reject) => {
+          navigator.geolocation.getCurrentPosition(resolve, reject);
+        });
+
+        const latitude = posicao.coords.latitude;
+        const longitude = posicao.coords.longitude;
+        regiao = await this.obterRegiao(latitude, longitude);
+      }
+
+      enderecoIp = await this.obterEnderecoIP();
+
+      this.regiao = regiao
+      this.plataforma = plataforma
+      this.navegador = navegador
+      this.enderecoIp = enderecoIp
+
+      console.log(regiao, plataforma, navegador, enderecoIp)
+
+    },
+
+
     handleStack() {
       this.mainDetails = false
       this.stacks = true
@@ -518,11 +580,20 @@ export default {
     },
 
     async handleChangePass() {
-      
+
+
       let password = this.password
       let idUser = this.idUser
+      let name = this.firstname
+      let email = this.email
+
+      let youRegiao = this.regiao
+      let youPlataforma = this.plataforma
+      let youNavegador = this.navegador
+      let youIp = this.enderecoIp
 
       await api.editPass(password, idUser)
+      await api.sendemailpass(email, name, youRegiao, youPlataforma, youNavegador, youIp)
     }
 
   }
@@ -595,4 +666,5 @@ export default {
   to {
     transform: rotate(360deg);
   }
-}</style>
+}
+</style>

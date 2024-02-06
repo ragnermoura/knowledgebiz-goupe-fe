@@ -58,7 +58,7 @@
                       Vacations</button>
                   </li>
 
-                 
+
 
                 </ul>
 
@@ -79,7 +79,8 @@
                       </div>
 
                       <div class="alert alert-danger" v-if="msg_email_error" role="alert">
-                        <i class="fa fa-ban"></i> Oops... someone already uses this email... better choose another one or go to your user list.
+                        <i class="fa fa-ban"></i> Oops... someone already uses this email... better choose another one or
+                        go to your user list.
                       </div>
 
                       <div class="row" v-if="mainDetails">
@@ -618,6 +619,15 @@
                           <option value="pt">Portuguese</option>
                         </select>
                       </div>
+                      <div class="mb-3 col-md-6">
+                        <label for="language" class="form-label">Genre</label>
+                        <select id="language" v-model="genre" class="select2 form-select">
+                          <option value="">Select Genre</option>
+                          <option value="male">Male</option>
+                          <option value="female">Female</option>
+                        </select>
+
+                      </div>
 
 
                     </div>
@@ -674,6 +684,7 @@ export default {
       country: '',
       language: '',
       birthday: '',
+      genre: '',
       level: '',
       selectedFile: null,
       previewUrl: null,
@@ -803,6 +814,7 @@ export default {
       let password = this.password
       let position = this.position
       let birthday = this.birthday
+      let sexo = this.genre
       let phone = this.phone
       let address = this.address
       let zipcode = this.zipcode
@@ -812,24 +824,24 @@ export default {
       let email = this.email
 
       try {
-        const response = await api.cadastro(firstName, lastName, password, email, position, birthday, phone, address, zipcode, country, language, level);
+        const response = await api.cadastro(firstName, lastName, password, email, position, birthday, sexo, phone, address, zipcode, country, language, level);
 
         if (response.status == 200 || response.status == 201 || response.status == 204 || response.status == 202) {
           this.msg_success = true;
 
-       
+
 
           setTimeout(() => {
             this.msg_success = false;
             window.location.reload();
           }, 3000);
-    
+
         }
 
       } catch (error) {
         console.log("Tem um error ========>", error);
 
-        if(error.response.status == 409){
+        if (error.response.status == 409) {
           this.msg_email_error = true;
 
           setTimeout(() => {
