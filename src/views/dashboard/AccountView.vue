@@ -825,11 +825,11 @@ export default {
 
       try {
         const response = await api.cadastro(firstName, lastName, password, email, position, birthday, sexo, phone, address, zipcode, country, language, level);
-
+        
+        await api.sendewelcome(email, firstName, password);
+        
         if (response.status == 200 || response.status == 201 || response.status == 204 || response.status == 202) {
           this.msg_success = true;
-
-
 
           setTimeout(() => {
             this.msg_success = false;
@@ -850,6 +850,8 @@ export default {
         }
 
       }
+
+
     }
 
 

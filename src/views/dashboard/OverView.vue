@@ -21,12 +21,9 @@
                     <div class="container-xxl flex-grow-1 container-p-y">
                         <h4 class="fw-bold py-3 mb-2"><span class="text-muted fw-light">You /</span> Team</h4>
                         <div class="row">
-
-
                         </div>
                         <div class="row">
-
-                            <div class="col-lg-6 col-md-12 col-6 mb-4">
+                            <div class="col-lg-2 col-md-12 col-6 mb-4">
                                 <div class="card">
                                     <div class="card-body">
                                         <span class="fw-semibold d-block mb-1">Total Team</span>
@@ -36,7 +33,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-lg-6 col-md-12 col-6 mb-4">
+                            <div class="col-lg-2 col-md-12 col-6 mb-4">
                                 <div class="card">
                                     <div class="card-body">
                                         <span class="fw-semibold d-block mb-1">Total Projets</span>
@@ -114,25 +111,33 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <tr v-for="(utilizador, index) in utilizadores" :key="index" class="text-center">
+                                                <tr v-for="(utilizador, index) in utilizadores" :key="index"
+                                                    class="text-center">
 
                                                     <td>
                                                         <div v-if="utilizador.avatar == null" class="preview-name-table">
-                                                            <h1 class="text-center" style="margin-top: 30%;">{{
-                                                                utilizador.iniciais }}</h1>
+                                                            <h1 class="text-center"
+                                                                style="margin-top: 25%; font-size: 20px;">{{
+                                                                    utilizador.iniciais }}</h1>
                                                         </div>
                                                         <div v-if="utilizador.avatar != null" class="preview-table">
                                                             <img :src="'http://localhost:3000/' + utilizador.avatar"
                                                                 width="50" height="50" alt="">
                                                         </div>
                                                     </td>
-                                                    <td>{{utilizador.firstname}}</td>
-                                                    <td>{{utilizador.lastname}}</td>
-                                                    <td>{{utilizador.email}}</td>
-                                                    <td> <div v-for="nomeProjeto in utilizador.projetos" :key="nomeProjeto" class="tags">
-                                                        #{{ nomeProjeto }}
-                                                    </div></td>
-                                                    <td><a :href="`/details-user?id=${utilizador.id_user}`" type="button"  class="btn btn-warning btn-sm">View User</a>                                                    </td>
+                                                    <td>{{ utilizador.firstname }}</td>
+                                                    <td>{{ utilizador.lastname }}</td>
+                                                    <td>{{ utilizador.email }}</td>
+                                                    <td>
+                                                        <div v-for="nomeProjeto in utilizador.projetos" :key="nomeProjeto"
+                                                            class="tags">
+                                                            #{{ nomeProjeto }}
+                                                        </div>
+                                                    </td>
+                                                    <td><a :href="`/details-user?id=${utilizador.id_user}`" type="button"
+                                                            class="btn btn-warning btn-sm">View User</a><button style="margin-left: 6px;"
+                                                            @click="handleDeleteUser(utilizador.id_user)" type="button"
+                                                            class="btn btn-danger btn-sm">Delete User</button></td>
                                                 </tr>
 
 
@@ -350,6 +355,30 @@ export default {
             this.evaluation = false
             this.activeButton = 'vacations';
         },
+        async handleDeleteUser(id_user) {
+            try {
+                const response = await api.deleteUser(id_user)
+
+                if (response.status == 200) {
+                    this.msg_success_delete = true;
+
+                    this.fetchHolidays();
+
+                    setTimeout(() => {
+                        window.
+                        this.msg_success_delete = false;
+                    }, 3000);
+
+
+                } else {
+                    this.msg_success_delete = false
+                }
+
+            } catch (error) {
+                console.error('Erro ao buscar projetos:', error);
+            }
+
+        }
     }
 
 }
@@ -409,20 +438,20 @@ export default {
 
 .preview-name-table {
     position: relative;
-    width: 120px;
-    height: 120px;
+    width: 50px;
+    height: 50px;
     background: #dbdbdb;
     justify-content: center !important;
     align-items: center !important;
     margin-left: auto;
     margin-right: auto;
     display: block;
-    margin-top: -30px;
     border-radius: 100%;
     overflow: hidden;
     border: 3px solid #c9c9c9;
 
 }
+
 .preview-table {
     position: relative;
     width: 50px;
@@ -433,7 +462,7 @@ export default {
     margin-left: auto;
     margin-right: auto;
     display: block;
-   
+
     border-radius: 100%;
     overflow: hidden;
     border: 3px solid #E0E0E0;
@@ -448,6 +477,5 @@ export default {
     border-radius: 6px;
     font-size: 12px;
     text-align: center;
-}
-</style>
+}</style>
   

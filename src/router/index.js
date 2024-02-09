@@ -84,6 +84,11 @@ const router = createRouter({
       name: 'vacation-user',
       component: () => import('../views/dashboard/VacationView.vue')
     },
+    {
+      path: '/holiday',
+      name: 'holiday',
+      component: () => import('../views/dashboard/HolidayView.vue')
+    },
   
   ]
 })

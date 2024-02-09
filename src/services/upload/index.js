@@ -13,6 +13,7 @@ export default {
         {
           headers: {
             "Content-Type": "multipart/form-data",
+            "Content-Type": "application/pdf",
             Accept: "application/json",
           },
         }

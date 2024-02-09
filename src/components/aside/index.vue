@@ -51,6 +51,27 @@
           <div data-i18n="Analytics">My vacation</div>
         </a>
       </li>
+      <li class="menu-item">
+        <a href="#" class="menu-link">
+          <i class="menu-icon tf-icons bx bx-sitemap"></i>
+          <div data-i18n="Analytics">Vacation Map</div>
+        </a>
+      </li>
+
+      <li class="menu-item">
+        <a href="/holiday" class="menu-link">
+          <i class="menu-icon tf-icons bx bx-sun"></i>
+          <div data-i18n="Analytics">Holidays</div>
+        </a>
+      </li>
+
+      <li class="menu-item">
+        <a href="#" class="menu-link">
+          <i class="menu-icon tf-icons bx bx-mail-send"></i>
+        
+          <div data-i18n="Analytics"> Sending a receipt</div>
+        </a>
+      </li>
     
      
 

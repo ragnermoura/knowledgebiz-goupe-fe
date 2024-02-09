@@ -92,7 +92,6 @@ export default {
         }
       )
       .then((response) => {
-        console.log(response);
         return response;
       })
       .catch((error) => {
@@ -285,6 +284,37 @@ export default {
           plataforma: youPlataforma,
           naveagdor: youNavegador,
           enderecoIp: youIp,
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+            "Access-Control-Allow-Headers": "*",
+            "Access-Control-Allow-Methods": "OPTIONS,POST,GET",
+          },
+        }
+      )
+      .then((response) => {
+        return response;
+      })
+      .catch((error) => {
+        console.log("Tem um error ========>", error);
+      });
+  },
+
+  sendewelcome: (
+    email,
+    firstName,
+    password
+  ) => {
+
+    return http
+      .post(
+        "/usuarios/welcome",
+        {
+          nome: firstName,
+          email: email,
+          password: password
         },
         {
           headers: {
