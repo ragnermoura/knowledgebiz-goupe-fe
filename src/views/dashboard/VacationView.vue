@@ -118,7 +118,8 @@
                                                                                 approval</small>
                                                                         </p>
                                                                         <p v-if="vacation.status == 1" class="card-text">
-                                                                            <small class="text-success">Approved</small></p>
+                                                                            <small class="text-success">Approved</small>
+                                                                        </p>
                                                                     </div>
 
                                                                 </div>
@@ -152,6 +153,7 @@
                                                     <b>{{ arg.timeText }}</b>
                                                     <i>{{ arg.event.title }}</i>
                                                 </template>
+
                                             </FullCalendar>
                                         </div>
                                     </div>
@@ -183,8 +185,12 @@ import Navbar from "../../components/navbar/index.vue";
 import Footer from "../../components/footer/index.vue";
 import FullCalendar from "@fullcalendar/vue3";
 import dayGridPlugin from "@fullcalendar/daygrid";
+import timeGridPlugin from '@fullcalendar/timegrid';
+import listPlugin from '@fullcalendar/list';
+
 import VueJwtDecode from "vue-jwt-decode";
 import apiVacation from "../../services/vacation/index";
+import apiholiday from '../../services/holiday/index';
 
 export default {
     name: "Main-Vacation",
@@ -193,6 +199,9 @@ export default {
             dateStart: '',
             dateEnd: '',
 
+
+            vacationEvents: [],
+            holidayEvents: [],
             minhasvacations: [],
 
             birthday: false,
@@ -201,22 +210,29 @@ export default {
             name: '',
             idUser: '',
             color: '',
+            avatar: '',
 
             msgDate: false,
             msgbirthday: false,
             msgSuccess: false,
 
             calendarOptions: {
-                plugins: [dayGridPlugin],
+                plugins: [dayGridPlugin, timeGridPlugin, listPlugin],
+                headerToolbar: {
+                    left: 'prev,next today',
+                    center: 'title',
+                    right: 'dayGridMonth,timeGridWeek,timeGridDay,listYear'
+                },
                 initialView: "dayGridMonth",
                 events: [{
-                    title: "Meeting",
-                    start: '2023-09-04',
-                    description: "Vamos discutir ideias novas",
-                    className: "meeting-event",
-                    color: "#ddd",
+                    title: "",
+                    start: '',
+                    description: "",
+                    className: "",
+                    color: "",
+                    avatar: ''
                 }],
-                weekends: false,
+                weekends: true,
                 editable: true,
                 eventStartEditable: true,
                 eventDurationEditable: true,
@@ -249,25 +265,46 @@ export default {
 
         this.idUser = decode.id_user
         this.color = decode.color
+        this.avatar = decode.avatar
         let youcolor = this.color
 
-        apiVacation.myvacations().then((resposta) => {
-            let res = resposta.data.response
-            this.minhasvacations = res;
 
-            const events = resposta.data.response.map((item) => {
+        Promise.all([
+            apiVacation.myvacations(),
+            apiholiday.list()
+        ]).then((responses) => {
+
+            let vacationsResponse = responses[0].data.response;
+            let holidaysResponse = responses[1].data.response;
+
+            this.minhasvacations = vacationsResponse
+            this.vacationEvents = vacationsResponse.map((item) => {
+
                 return {
+
                     title: "🎉 Vacations" || "",
                     start: item?.date_start,
                     end: item?.date_end || "",
                     color: youcolor || "",
-                    description: item?.activity || "",
                 };
-
-                
             });
-            this.calendarOptions.events = events
-        })
+
+            this.holidayEvents = holidaysResponse.map((item) => {
+                return {
+                    title: "🏖️ Hollyday",
+                    start: item?.date_start,
+                    end: item?.date_end || "",
+                    color: "#f1c232",
+                    description: item?.holiday_name || "",
+
+                };
+            });
+
+
+            this.calendarOptions.events = [...this.holidayEvents, ...this.vacationEvents];
+
+
+        });
 
     },
     methods: {

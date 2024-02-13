@@ -40,5 +40,15 @@ export default {
         });
     },
 
+    deleteHoliday: (id_holiday) => {
+        return http.delete(`/holiday/delete/${id_holiday}`, {
+            headers: {
+                "Content-Type": "application/json",
+                "Access-Control-Allow-Headers": "*",
+                "Access-Control-Allow-Methods": "OPTIONS,POST,GET",
+            },
+        })
+    },
+
  
 }

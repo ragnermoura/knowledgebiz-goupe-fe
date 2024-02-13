@@ -52,7 +52,7 @@
         </a>
       </li>
       <li class="menu-item">
-        <a href="#" class="menu-link">
+        <a href="/vacation-map" class="menu-link">
           <i class="menu-icon tf-icons bx bx-sitemap"></i>
           <div data-i18n="Analytics">Vacation Map</div>
         </a>

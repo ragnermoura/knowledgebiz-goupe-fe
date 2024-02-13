@@ -43,6 +43,16 @@ export default {
         })
     },
 
+    vacations: () => {
+        return http.get("/vacation/", {
+            headers: {
+                "Content-Type": "application/json",
+                "Access-Control-Allow-Headers": "*",
+                "Access-Control-Allow-Methods": "OPTIONS,POST,GET",
+            },
+        })
+    },
+
     vacationsuser: (idDoUsuario) => {
         return http.get(`/vacation/user/${idDoUsuario}`, {
             headers: {

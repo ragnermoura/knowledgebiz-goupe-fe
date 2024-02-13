@@ -89,6 +89,11 @@ const router = createRouter({
       name: 'holiday',
       component: () => import('../views/dashboard/HolidayView.vue')
     },
+    {
+      path: '/vacation-map',
+      name: 'vacation-map',
+      component: () => import('../views/dashboard/VacationMapView.vue')
+    },
   
   ]
 })
